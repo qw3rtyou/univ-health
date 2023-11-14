@@ -6,4 +6,8 @@ public class AerobicExercise extends Exercise {
 		super(name, type, caloriesBurnedPerMinute);
 	}
     
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }

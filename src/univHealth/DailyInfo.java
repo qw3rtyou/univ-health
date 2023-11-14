@@ -22,8 +22,24 @@ public class DailyInfo implements Comparable<DailyInfo> {
 		for (UserExercise exercise : exercises) {
 			buf += exercise.toString();
 		}
-
+		
 		return buf;
+	}
+
+	int getDailyCalInput() {
+		int sum = 0;
+		for (UserFood userFood : eatenFoods) {
+			sum += userFood.getCal();
+		}
+		return sum;
+	}
+
+	int getDailyCalOuput() {
+		int sum = 0;
+		for (UserExercise userExercise : exercises) {
+			userExercise.getCaloriesBurned();
+		}
+		return sum;
 	}
 
 	public ArrayList<UserFood> getEatenFoods() {

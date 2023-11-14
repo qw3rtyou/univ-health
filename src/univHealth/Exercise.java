@@ -14,6 +14,14 @@ public class Exercise {
 	public int calculateCaloriesBurned(int duration) {
 		return duration * caloriesBurnedPerMinute;
 	}
+	
+	@Override
+	public String toString() {
+		String buf="";
+		buf+="이름 : "+name+"("+type+")";
+		buf+="\n소모 칼로리(분) : "+caloriesBurnedPerMinute+"\n";
+		return buf;
+	}
 
 	public String getName() {
 		return name;
