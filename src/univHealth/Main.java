@@ -60,7 +60,7 @@ public class Main {
 		while (true) {
 			menu();
 			switch (scanner.nextInt()) {
-			case 0: // 추후 사용법으로 바뀔 예정
+			case 0: // 추후 사용법이나 관리자 매뉴 등으로 바뀔 예정
 				test();
 				break;
 
@@ -227,6 +227,7 @@ public class Main {
 		int amount;
 		String exerciseName;
 		int time;
+		int weight;
 
 		System.out.println("===일일 입력===");
 		System.out.print("기록날짜(yyyy mm dd) : ");
@@ -279,7 +280,8 @@ public class Main {
 
 			System.out.print("운동 시간 : ");
 			time = scanner.nextInt();
-			newExercise = new UserExercise(exercise, time);
+			weight = (int) (currentUser.getWeight() * time); // 가중치 계산
+			newExercise = new UserExercise(exercise, weight);
 			newDailyInfo.addExerciseDone(newExercise);
 		}
 
@@ -298,7 +300,7 @@ public class Main {
 	}
 
 	void saveCurrentState() {
-		//구현중
+		// 구현중
 	}
 
 	static User findUserByName(String kwd) {
