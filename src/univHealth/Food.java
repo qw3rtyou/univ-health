@@ -29,8 +29,8 @@ public class Food {
 	public String toString() {
 		return "음식 이름 : " + name + "\n" + nutrition.toString();
 	}
-	
-	int getCalRatio(){
-		return (int) ((nutrition.getCarbRatio() + nutrition.getProteinRatio()) * 4 + nutrition.getFatRatio() * 9);
+
+	Double getCalRatio() {
+		return nutrition.getCalRatio();
 	}
 }

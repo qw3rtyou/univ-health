@@ -8,7 +8,7 @@ public class UserFood {
 	public UserFood(Food food, int size) {
 		this.food = food;
 		this.size = size;
-		this.cal = food.getCalRatio() * size;
+		this.cal = (int) (food.getCalRatio() * size);
 	}
 
 	@Override

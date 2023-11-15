@@ -58,13 +58,17 @@ public class Main {
 		System.out.println("\n\n\n\n\n4. 현재 유저 출력");
 		System.out.println(currentUser);
 	}
-
-	void start() {
+	
+	void init() {
 		users = loadUsersFromFile("user_data.txt");
 		foods = loadFoodsFromFile("food_data.txt");
 		loadDailyFoodFromFile("user_food_data.txt");
 		exercises = loadExercisesFromFile("exercise_data.txt");
 		loadDailyExerciseFromFile("user_exercise_data.txt");
+	}
+
+	void start() {
+		init();
 
 		Scanner scanner = new Scanner(System.in);
 		currentUser = new User("아직 설정되지 않음", 0, 0, "NaN", 0);
@@ -450,7 +454,9 @@ public class Main {
 					System.out.println("초기 구성 데이터 무결성 오류!\n해당 날짜의 운동 정보가 이미 존재합니다.(" + date + ")");
 					return;
 				}
-				user.dailyInfos.add(new DailyInfo(date));
+				
+				if (!user.isDailyExist(date))
+					user.dailyInfos.add(new DailyInfo(date));
 
 				for (int i = 0; i < num; i++) {
 					line = scanner.nextLine();

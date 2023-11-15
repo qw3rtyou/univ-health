@@ -11,6 +11,15 @@ public class Nutrition {
 		this.fatRatio = fatRatio;
 	}
 
+	Double getCalRatio() {
+		return (carbRatio * 4 + proteinRatio * 4 + fatRatio * 9) / 100;
+	}
+
+	@Override
+	public String toString() {
+		return "탄당지 비율 정보 \n탄수화물 : " + carbRatio + "\n단백질 : " + proteinRatio + "\n지방 : " + fatRatio + "\n";
+	}
+
 	public double getCarbRatio() {
 		return carbRatio;
 	}
@@ -33,10 +42,5 @@ public class Nutrition {
 
 	public void setFatRatio(double fatRatio) {
 		this.fatRatio = fatRatio;
-	}
-
-	@Override
-	public String toString() {
-		return "탄당지 비율 정보 \n탄수화물 : "+carbRatio+"\n단백질 : "+proteinRatio+"\n지방 : "+fatRatio+"\n";
 	}
 }

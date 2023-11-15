@@ -62,8 +62,8 @@ public class User {
 		partCount.put("하체", 0);
 		partCount.put("어깨", 0);
 		partCount.put("등", 0);
-		partCount.put("코어", 0);
-		partCount.put("전신", 0);
+		partCount.put("상체", 0);
+		partCount.put("가슴", 0);
 
 		for (UserExercise userExercise : getCurrentDailyInfo().getExercises()) {
 			if (userExercise.getExercise() instanceof AnaerobicExercise) {
@@ -87,6 +87,14 @@ public class User {
 		} else {
 			System.out.println("무산소 운동 정보가 없습니다.");
 		}
+	}
+	
+	Boolean isDailyExist(Date date) {
+		for (DailyInfo dailyInfo : dailyInfos) {
+			if (dailyInfo.getDate().equals(date))
+				return true;
+		}
+		return false;
 	}
 
 	Boolean isDailyFoodExist(Date date) {
