@@ -7,13 +7,15 @@ public class DailyInfo implements Comparable<DailyInfo> {
 	private ArrayList<UserExercise> exercises = new ArrayList<>();
 	private Date date;
 
-	public DailyInfo(int year, int month, int day) {
-		this.setDate(new Date(year, month, day));
+	public DailyInfo(Date date) {
+		this.setDate(date);
 	}
 
 	@Override
 	public String toString() {
-		String buf = date.toString() + "\n===칼로리정보===\n";
+		String buf = date.toString();
+		buf+="-------------------";
+		buf += "\n===칼로리정보===\n";
 		for (UserFood eatenFood : eatenFoods) {
 			buf += eatenFood.toString();
 		}
@@ -22,7 +24,7 @@ public class DailyInfo implements Comparable<DailyInfo> {
 		for (UserExercise exercise : exercises) {
 			buf += exercise.toString();
 		}
-		
+
 		return buf;
 	}
 

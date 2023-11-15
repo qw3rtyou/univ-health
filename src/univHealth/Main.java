@@ -14,6 +14,7 @@ Factory, Manager 적용
 음식 추천 알로리즘(목표 중량, 가장 최근 섭취 음식 기반 추천 예정)
 저장 기능 구현(user_data.txt, user_food_data.txt, user_routine_data.txt에 현재 state 저장)
 하루일과 수정, 삭제 기능
+중복되는 코드가 너무 많음 -> 리펙토링 해야함
 
 후순위
 접근제어자 체크
@@ -21,13 +22,23 @@ Factory, Manager 적용
 사용자 정의 운동 추가 기능 구현 
 사용자 정의 음식 추가 기능 구현
 저장 기능 구현(사용자 정의 기능이 추가되면 기본 데이터도 수정 가능)
+추천 알고리즘 개선
 */
+
+/*
+ * 처음에 중량, 몇 세트, 한 횟수 등을 고려하여 칼로리 계산을 하자는 의견이 있었는데,
+ * 검색해보니 해당 값들을 이용해 칼로리 계산을 하는건 현실적으로 매우 어렵다고 함
+ * 만약 위와 같은 값들로 칼로리 계산을 하려고 하면
+ * 1. 위의 요인들을 고려한 계산식이 필요
+ * 2. 해당 계산식을 활용하여 다양한 운동했을 때 나온 칼로리 데이터가 필요
+ * 둘 다 검색해도 없어서 그냥 시간 당 대략적인 칼로리 소모로 계획 변경
+ */
 
 public class Main {
 	public static ArrayList<Food> foods;
 	public static ArrayList<User> users;
 	public static ArrayList<Exercise> exercises;
-	User currentUser;
+	static User currentUser;
 
 	public static void main(String[] args) {
 		Main main = new Main();
@@ -53,6 +64,7 @@ public class Main {
 		foods = loadFoodsFromFile("food_data.txt");
 		loadDailyFoodFromFile("user_food_data.txt");
 		exercises = loadExercisesFromFile("exercise_data.txt");
+		loadDailyExerciseFromFile("user_exercise_data.txt");
 
 		Scanner scanner = new Scanner(System.in);
 		currentUser = new User("아직 설정되지 않음", 0, 0, "NaN", 0);
@@ -227,7 +239,6 @@ public class Main {
 		int amount;
 		String exerciseName;
 		int time;
-		int weight;
 
 		System.out.println("===일일 입력===");
 		System.out.print("기록날짜(yyyy mm dd) : ");
@@ -244,7 +255,7 @@ public class Main {
 			}
 		}
 
-		DailyInfo newDailyInfo = new DailyInfo(year, month, day);
+		DailyInfo newDailyInfo = new DailyInfo(new Date(year, month, day));
 		UserFood newFood;
 		UserExercise newExercise;
 
@@ -280,8 +291,7 @@ public class Main {
 
 			System.out.print("운동 시간 : ");
 			time = scanner.nextInt();
-			weight = (int) (currentUser.getWeight() * time); // 가중치 계산
-			newExercise = new UserExercise(exercise, weight);
+			newExercise = new UserExercise(exercise, currentUser.getWeight(), time);
 			newDailyInfo.addExerciseDone(newExercise);
 		}
 
@@ -345,6 +355,32 @@ public class Main {
 		return foods;
 	}
 
+	public static ArrayList<Exercise> loadExercisesFromFile(String filename) {
+		ArrayList<Exercise> exercises = new ArrayList<>();
+		try (Scanner scanner = new Scanner(new File(filename))) {
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				String[] parts = line.split(" ");
+				String type = parts[0];
+				String name = parts[1];
+				Double mets = Double.parseDouble(parts[2]);
+				String part;
+				Exercise exercise;
+
+				if (type.contentEquals("무산소")) {
+					part = parts[3];
+					exercise = new AnaerobicExercise(name, type, mets, part);
+				} else
+					exercise = new AerobicExercise(name, type, mets);
+
+				exercises.add(exercise);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exercises;
+	}
+
 	public static ArrayList<User> loadUsersFromFile(String filename) {
 		ArrayList<User> users = new ArrayList<>();
 		try (Scanner scanner = new Scanner(new File(filename))) {
@@ -375,7 +411,13 @@ public class Main {
 				int day = Integer.parseInt(parts[3]);
 				int num = Integer.parseInt(parts[4]);
 				User user = findUserByName(name);
-				user.dailyInfos.add(new DailyInfo(year, month, day));
+				Date date = new Date(year, month, day);
+
+				if (user.isDailyFoodExist(date)) {
+					System.out.println("초기 구성 데이터 무결성 오류!\n해당 날짜의 식단 정보가 이미 존재합니다.(" + date + ")");
+					return;
+				}
+				user.dailyInfos.add(new DailyInfo(date));
 
 				for (int i = 0; i < num; i++) {
 					line = scanner.nextLine();
@@ -383,7 +425,7 @@ public class Main {
 					String foodName = parts[0];
 					int foodsize = Integer.parseInt(parts[1]);
 					Food food = findFoodByName(foodName);
-					user.findDaily(year, month, day).addFoodEaten(new UserFood(food, foodsize));
+					user.findDaily(date).addFoodEaten(new UserFood(food, foodsize));
 				}
 			}
 		} catch (Exception e) {
@@ -391,30 +433,36 @@ public class Main {
 		}
 	}
 
-	public static ArrayList<Exercise> loadExercisesFromFile(String filename) {
-		ArrayList<Exercise> exercises = new ArrayList<>();
+	public static void loadDailyExerciseFromFile(String filename) {
 		try (Scanner scanner = new Scanner(new File(filename))) {
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				String[] parts = line.split(" ");
-				String type = parts[0];
-				String name = parts[1];
-				int cal = Integer.parseInt(parts[2]);
-				String part;
-				Exercise exercise;
+				String name = parts[0];
+				int year = Integer.parseInt(parts[1]);
+				int month = Integer.parseInt(parts[2]);
+				int day = Integer.parseInt(parts[3]);
+				int num = Integer.parseInt(parts[4]);
+				User user = findUserByName(name);
+				Date date = new Date(year, month, day);
 
-				if (type.contentEquals("무산소")) {
-					part = parts[3];
-					exercise = new AnaerobicExercise(name, type, cal, part);
-				} else
-					exercise = new AerobicExercise(name, type, cal);
+				if (user.isDailyExerciseExist(date)) {
+					System.out.println("초기 구성 데이터 무결성 오류!\n해당 날짜의 운동 정보가 이미 존재합니다.(" + date + ")");
+					return;
+				}
+				user.dailyInfos.add(new DailyInfo(date));
 
-				exercises.add(exercise);
+				for (int i = 0; i < num; i++) {
+					line = scanner.nextLine();
+					parts = line.split(" ");
+					String exerciseName = parts[0];
+					int duration = Integer.parseInt(parts[1]);
+					Exercise exercise = findExerciseByName(exerciseName);
+					user.findDaily(date).addExerciseDone(new UserExercise(exercise, user.getWeight(), duration));
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return exercises;
 	}
-
 }

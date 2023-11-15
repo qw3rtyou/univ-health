@@ -3,23 +3,19 @@ package univHealth;
 public class Exercise {
 	protected String name;
 	protected String type;
-	protected int caloriesBurnedPerMinute;
+	protected Double mets;
 
-	public Exercise(String name, String type, int caloriesBurnedPerMinute) {
+	public Exercise(String name, String type, Double mets) {
 		this.name = name;
 		this.type = type;
-		this.caloriesBurnedPerMinute = caloriesBurnedPerMinute;
+		this.mets = mets;
 	}
 
-	public int calculateCaloriesBurned(int duration) {
-		return duration * caloriesBurnedPerMinute;
-	}
-	
 	@Override
 	public String toString() {
 		String buf="";
 		buf+="이름 : "+name+"("+type+")";
-		buf+="\n소모 칼로리(분) : "+caloriesBurnedPerMinute+"\n";
+		buf+="\nMETs(운동강도) : "+mets+"\n";
 		return buf;
 	}
 
@@ -39,11 +35,11 @@ public class Exercise {
 		this.type = type;
 	}
 
-	public int getCaloriesBurnedPerMinute() {
-		return caloriesBurnedPerMinute;
+	public Double getMets() {
+		return mets;
 	}
 
-	public void setCaloriesBurnedPerMinute(int caloriesBurnedPerMinute) {
-		this.caloriesBurnedPerMinute = caloriesBurnedPerMinute;
+	public void setMets(Double mets) {
+		this.mets = mets;
 	}
 }

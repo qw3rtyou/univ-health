@@ -2,18 +2,19 @@ package univHealth;
 
 public class UserExercise {
 	Exercise exercise;
-	int weights; // 가중치(얼마나 오랬동안 했는지, 체중 고려)
+	Double weight;
+	int duration;
 	int caloriesBurned; // 칼로리 소모량 (칼로리) = METs × 체중(kg) × 시간(분)
 
-	public UserExercise(Exercise exercise, int weights) {
+	public UserExercise(Exercise exercise, Double weight, int duration) {
 		this.exercise = exercise;
-		this.weights = weights;
-		this.caloriesBurned = exercise.caloriesBurnedPerMinute * weights;
+		this.weight = weight;
+		this.caloriesBurned = (int) (exercise.mets * weight * duration);
 	}
 
 	@Override
 	public String toString() {
-		return exercise.toString() + "METs(가중치) : " + weights + "\n총 칼로리 소모 : " + caloriesBurned + "\n";
+		return exercise.toString() + "운동시간 : " + duration + "\n총 칼로리 소모 : " + caloriesBurned + "\n";
 	}
 
 	public Exercise getExercise() {
@@ -24,12 +25,12 @@ public class UserExercise {
 		this.exercise = exercise;
 	}
 
-	public int getWeights() {
-		return weights;
+	public Double getWeight() {
+		return weight;
 	}
 
-	public void setWeights(int weights) {
-		this.weights = weights;
+	public void setWeight(Double weights) {
+		this.weight = weights;
 	}
 
 	public int getCaloriesBurned() {

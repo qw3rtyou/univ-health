@@ -21,8 +21,7 @@ public class User {
 		this.goal = goal;
 	}
 
-	DailyInfo findDaily(int year, int month, int day) {
-		Date date = new Date(year, month, day);
+	DailyInfo findDaily(Date date) {
 		for (DailyInfo dailyInfo : dailyInfos) {
 			if (dailyInfo.getDate().equals(date))
 				return dailyInfo;
@@ -30,7 +29,7 @@ public class User {
 		return null;
 	}
 
-	void foodRecommend() {
+	void foodRecommend() {	//추천 알고리즘 다소 빈약함
 		DailyInfo dailyInfo = getCurrentDailyInfo();
 
 		int recommendedDailyCal = (int) weight * 30; // 하루 권장 섭취량은 30*몸무게
@@ -65,7 +64,7 @@ public class User {
 		partCount.put("등", 0);
 		partCount.put("코어", 0);
 		partCount.put("전신", 0);
-		
+
 		for (UserExercise userExercise : getCurrentDailyInfo().getExercises()) {
 			if (userExercise.getExercise() instanceof AnaerobicExercise) {
 				AnaerobicExercise anaerobicExercise = (AnaerobicExercise) userExercise.getExercise();
@@ -88,6 +87,22 @@ public class User {
 		} else {
 			System.out.println("무산소 운동 정보가 없습니다.");
 		}
+	}
+
+	Boolean isDailyFoodExist(Date date) {
+		for (DailyInfo dailyInfo : dailyInfos) {
+			if (dailyInfo.getDate().equals(date) && !dailyInfo.getEatenFoods().isEmpty())
+				return true;
+		}
+		return false;
+	}
+
+	Boolean isDailyExerciseExist(Date date) {
+		for (DailyInfo dailyInfo : dailyInfos) {
+			if (dailyInfo.getDate().equals(date) && !dailyInfo.getExercises().isEmpty())
+				return true;
+		}
+		return false;
 	}
 
 	@Override
