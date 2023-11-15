@@ -9,6 +9,15 @@ public class Food {
 		this.nutrition = nutrition;
 	}
 
+	@Override
+	public String toString() {
+		return "음식 이름 : " + name + "\n" + nutrition.toString();
+	}
+
+	Double getCalRatio() {
+		return nutrition.getCalRatio();
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -23,14 +32,5 @@ public class Food {
 
 	public void setNutrition(Nutrition nutrition) {
 		this.nutrition = nutrition;
-	}
-
-	@Override
-	public String toString() {
-		return "음식 이름 : " + name + "\n" + nutrition.toString();
-	}
-
-	Double getCalRatio() {
-		return nutrition.getCalRatio();
 	}
 }

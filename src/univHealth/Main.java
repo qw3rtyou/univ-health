@@ -1,6 +1,9 @@
 package univHealth;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -40,6 +43,12 @@ public class Main {
 	public static ArrayList<Exercise> exercises;
 	static User currentUser;
 
+	final String FILE_PATH_USER = "user_data.txt";
+	final String FILE_PATH_FOOD = "food_data.txt";
+	final String FILE_PATH_USERFOOD = "user_food_data.txt";
+	final String FILE_PATH_EXERCISE = "exercise_data.txt";
+	final String FILE_PATH_USEREXERCISE = "user_exercise_data.txt";
+
 	public static void main(String[] args) {
 		Main main = new Main();
 		main.start();
@@ -58,13 +67,13 @@ public class Main {
 		System.out.println("\n\n\n\n\n4. 현재 유저 출력");
 		System.out.println(currentUser);
 	}
-	
+
 	void init() {
-		users = loadUsersFromFile("user_data.txt");
-		foods = loadFoodsFromFile("food_data.txt");
-		loadDailyFoodFromFile("user_food_data.txt");
-		exercises = loadExercisesFromFile("exercise_data.txt");
-		loadDailyExerciseFromFile("user_exercise_data.txt");
+		users = loadUsersFromFile(FILE_PATH_USER);
+		foods = loadFoodsFromFile(FILE_PATH_FOOD);
+		loadDailyFoodFromFile(FILE_PATH_USERFOOD);
+		exercises = loadExercisesFromFile(FILE_PATH_EXERCISE);
+		loadDailyExerciseFromFile(FILE_PATH_USEREXERCISE);
 	}
 
 	void start() {
@@ -252,7 +261,7 @@ public class Main {
 		day = scanner.nextInt();
 		Date date = new Date(year, month, day);
 
-		for (DailyInfo dailyInfo : currentUser.getdailyInfos()) {
+		for (DailyInfo dailyInfo : currentUser.getDailyInfos()) {
 			if (dailyInfo.getDate().equals(date)) {
 				System.out.println("이미 해당 날짜에 기록된 내용이 있음");
 				return;
@@ -314,7 +323,30 @@ public class Main {
 	}
 
 	void saveCurrentState() {
-		// 구현중
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH_USER))) {
+			for (User user : users) {
+				writer.write(user.toStringforUserFile());
+				writer.newLine();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH_USERFOOD))) {
+			for (User user : users) {
+				writer.write(user.toStringforFoodFile());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH_USEREXERCISE))) {
+			for (User user : users) {
+				writer.write(user.toStringforExerciseFile());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	static User findUserByName(String kwd) {
@@ -454,7 +486,7 @@ public class Main {
 					System.out.println("초기 구성 데이터 무결성 오류!\n해당 날짜의 운동 정보가 이미 존재합니다.(" + date + ")");
 					return;
 				}
-				
+
 				if (!user.isDailyExist(date))
 					user.dailyInfos.add(new DailyInfo(date));
 

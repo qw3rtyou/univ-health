@@ -29,7 +29,7 @@ public class User {
 		return null;
 	}
 
-	void foodRecommend() {	//추천 알고리즘 다소 빈약함
+	void foodRecommend() { // 추천 알고리즘 다소 빈약함
 		DailyInfo dailyInfo = getCurrentDailyInfo();
 
 		int recommendedDailyCal = (int) weight * 30; // 하루 권장 섭취량은 30*몸무게
@@ -88,7 +88,7 @@ public class User {
 			System.out.println("무산소 운동 정보가 없습니다.");
 		}
 	}
-	
+
 	Boolean isDailyExist(Date date) {
 		for (DailyInfo dailyInfo : dailyInfos) {
 			if (dailyInfo.getDate().equals(date))
@@ -127,8 +127,41 @@ public class User {
 		int size = dailyInfos.size();
 		return dailyInfos.get(size - 1);
 	}
+	
+	public String toStringforUserFile() {
+		return name + " " + height + " " + weight + " " + gender + " " + goal;
+	}
 
-	public ArrayList<DailyInfo> getdailyInfos() {
+	public String toStringforFoodFile() {
+		String buf = "";
+		ArrayList<UserFood> userFoods;
+		for (DailyInfo dailyInfo : dailyInfos) {
+			userFoods = dailyInfo.getEatenFoods();
+			buf += name + " " + dailyInfo.getDate().toString() + " " + userFoods.size() + "\n";
+			for (UserFood userFood : userFoods) {
+				buf += userFood.getFood().getName() + " " + userFood.getSize() + "\n";
+			}
+		}
+
+		return buf;
+	}
+
+	public String toStringforExerciseFile() {
+		name=name.trim();
+		String buf = "";
+		ArrayList<UserExercise> userExercises;
+		for (DailyInfo dailyInfo : dailyInfos) {
+			userExercises = dailyInfo.getExercises();
+			buf += name + " " + dailyInfo.getDate().toString() + " " + userExercises.size() + "\n";
+			for (UserExercise userExercise : userExercises) {
+				buf += userExercise.getExercise().getName() + " " + userExercise.getDuration() + "\n";
+			}
+		}
+
+		return buf;
+	}
+
+	public ArrayList<DailyInfo> getDailyInfos() {
 		return dailyInfos;
 	}
 

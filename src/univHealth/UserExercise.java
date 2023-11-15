@@ -9,6 +9,7 @@ public class UserExercise {
 	public UserExercise(Exercise exercise, Double weight, int duration) {
 		this.exercise = exercise;
 		this.weight = weight;
+		this.duration = duration;
 		this.caloriesBurned = (int) (exercise.mets * weight * duration);
 	}
 
@@ -39,5 +40,13 @@ public class UserExercise {
 
 	public void setCaloriesBurned(int caloriesBurned) {
 		this.caloriesBurned = caloriesBurned;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 }
