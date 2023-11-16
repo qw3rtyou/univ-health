@@ -121,11 +121,21 @@ public class User implements Manageable {
 
 	@Override
 	public String toString() {
+		String buf = "\n이름 : " + name + "\n키 : " + height + "\n몸무게 : " + weight + "\n성별 : " + gender
+				+ "\n목표 몸무게 : " + goal + "\n";
+		for (DailyInfo dailyResult : dailyInfos) {
+			buf += dailyResult.toString();
+		}
+		return buf;
+	}
+
+	String toStringDetail() {
 		String buf = "===기본정보===\n이름 : " + name + "\n키 : " + height + "\n몸무게 : " + weight + "\n성별 : " + gender
 				+ "\n목표 몸무게 : " + goal + "\n";
 		for (DailyInfo dailyResult : dailyInfos) {
-			buf += dailyResult;
+			buf += dailyResult.toStringDetail();
 		}
+
 		return buf;
 	}
 

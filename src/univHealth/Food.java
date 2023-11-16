@@ -28,7 +28,7 @@ public class Food implements Manageable {
 
 	@Override
 	public boolean matches(String kwd) {
-		return false;
+		return kwd.equals(name);
 	}
 
 	public String getName() {

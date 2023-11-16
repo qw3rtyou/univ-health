@@ -115,35 +115,21 @@ public class Main {
 				if (currentUser.getName().contentEquals("아직 설정되지 않음"))
 					System.out.println("사용자 설정을 해야 함!");
 				else
-					inputDaily(scanner);
+					commitLoop(scanner);
 				break;
 
 			case 3:
 				if (currentUser.getName().contentEquals("아직 설정되지 않음"))
 					System.out.println("사용자 설정을 해야 함!");
 				else
-					System.out.println(currentUser.getCurrentDailyInfo());
-				break;
-
-			case 4:
-				if (currentUser.getName().contentEquals("아직 설정되지 않음"))
-					System.out.println("사용자 설정을 해야 함!");
-				else
-					System.out.println(currentUser);
-				break;
-
-			case 5:
-				if (currentUser.getName().contentEquals("아직 설정되지 않음"))
-					System.out.println("사용자 설정을 해야 함!");
-				else
 					recommend();
 				break;
 
-			case 6:
+			case 4:
 				saveCurrentState();
 				break;
 
-			case 7:
+			case 5:
 				scanner.close();
 				System.out.println("프로그램 정상 종료...");
 				return;
@@ -159,12 +145,10 @@ public class Main {
 		System.out.println("===Health!!===");
 		System.out.println("현재 사용자 : " + currentUser.getName());
 		System.out.println("1. 사용자 메뉴");
-		System.out.println("2. 일일 루틴 & 음식 입력하기");
-		System.out.println("3. 최근 칼로리 확인");
-		System.out.println("4. 나의 모든 기록 열람");
-		System.out.println("5. 루틴 추천받기");
-		System.out.println("6. 저장하기");
-		System.out.println("7. 나가기");
+		System.out.println("2. 기록 메뉴");
+		System.out.println("3. 루틴&식단 추천받기");
+		System.out.println("4. 저장하기");
+		System.out.println("5. 종료");
 	}
 
 	void userMenu() {
@@ -176,6 +160,17 @@ public class Main {
 		System.out.println("4. 사용자 삭제");
 		System.out.println("5. 사용자 정보 출력");
 		System.out.println("6. 돌아가기");
+	}
+
+	void commitMenu() {
+		System.out.println("===기록 매뉴===");
+		System.out.println("현재 사용자 : " + currentUser.getName());
+		System.out.println(currentUser);
+		System.out.println("1. 기록 입력하기");
+		System.out.println("2. 오늘(최근) 기록 열람");
+		System.out.println("3. 나의 모든 기록 열람");
+		System.out.println("4. 특정 날짜 기록 열람");
+		System.out.println("5. 돌아가기");
 	}
 
 	void userLoop(Scanner scanner) {
@@ -190,7 +185,7 @@ public class Main {
 			userMenu();
 			switch (scanner.nextInt()) {
 			case 1:
-				System.out.println("사용자 이름 : ");
+				System.out.print("사용자 이름 : ");
 				user = (User) userManager.find(scanner.next());
 				if (user == null)
 					System.out.println("사용자를 찾을 수 없습니다");
@@ -199,42 +194,42 @@ public class Main {
 				break;
 
 			case 2:
-				System.out.println("사용자 이름 : ");
+				System.out.print("사용자 이름 : ");
 				name = scanner.next();
-				System.out.println("사용자 키 : ");
+				System.out.print("사용자 키 : ");
 				height = scanner.nextDouble();
-				System.out.println("사용자 몸무게 : ");
+				System.out.print("사용자 몸무게 : ");
 				weight = scanner.nextDouble();
-				System.out.println("사용자 성별 : ");
+				System.out.print("사용자 성별 : ");
 				gender = scanner.next();
-				System.out.println("사용자 목표 체중 : ");
+				System.out.print("사용자 목표 체중 : ");
 				goal = scanner.nextInt();
 				userManager.mList.add(new User(name, height, weight, gender, goal));
 				System.out.println("계정 생성 성공");
 				break;
 
 			case 3:
-				System.out.println("사용자 이름 : ");
+				System.out.print("사용자 이름 : ");
 				user = (User) userManager.find(scanner.next());
 				if (user == null)
 					System.out.println("사용자를 찾을 수 없습니다");
 				else {
 					System.out.println(user);
-					System.out.println("사용자 이름 : ");
+					System.out.print("사용자 이름 : ");
 					user.setName(scanner.next());
-					System.out.println("사용자 키 : ");
+					System.out.print("사용자 키 : ");
 					user.setHeight(scanner.nextDouble());
-					System.out.println("사용자 몸무게 : ");
+					System.out.print("사용자 몸무게 : ");
 					user.setWeight(scanner.nextDouble());
-					System.out.println("사용자 성별 : ");
+					System.out.print("사용자 성별 : ");
 					user.setGender(scanner.next());
-					System.out.println("사용자 목표 체중 : ");
+					System.out.print("사용자 목표 체중 : ");
 					user.setGoal(scanner.nextInt());
 					System.out.println("계정 수정 성공");
 				}
 				break;
 			case 4:
-				System.out.println("사용자 이름 : ");
+				System.out.print("사용자 이름 : ");
 				user = (User) userManager.find(scanner.next());
 				if (user == null)
 					System.out.println("사용자를 찾을 수 없습니다");
@@ -256,7 +251,38 @@ public class Main {
 		}
 	}
 
-	void inputDaily(Scanner scanner) {
+	void commitLoop(Scanner scanner) {
+		commitMenu();
+		while (true) {
+			switch (scanner.nextInt()) {
+
+			case 1:
+				inputCommit(scanner);
+				break;
+
+			case 2:
+				System.out.println(currentUser.getCurrentDailyInfo());
+				break;
+
+			case 3:
+				System.out.println(currentUser.toStringDetail());
+				break;
+
+			case 4:
+				Date keyDate = new Date(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+				System.out.println(currentUser.findDaily(keyDate).toStringDetail());
+				break;
+
+			case 5:
+				return;
+
+			default:
+				break;
+			}
+		}
+	}
+
+	void inputCommit(Scanner scanner) {
 		System.out.println("현재 사용자로 입력을 시작합니다.(맞으면 y 입력)");
 
 		if (!scanner.next().contentEquals("y"))
