@@ -1,4 +1,4 @@
-package univHealth;
+package univHealth.copy;
 
 public class Exercise {
 	protected String name;
