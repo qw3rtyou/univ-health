@@ -245,4 +245,9 @@ public class User implements Manageable {
 		dailyInfos.add(dailyInfo);
 		Collections.sort(dailyInfos);
 	}
+	
+	public void removeDaily(DailyInfo dailyInfo) {
+		dailyInfos.remove(dailyInfo);
+		Collections.sort(dailyInfos);
+	}
 }

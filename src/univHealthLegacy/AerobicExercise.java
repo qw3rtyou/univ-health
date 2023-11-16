@@ -1,4 +1,4 @@
-package univHealth.copy;
+package univHealthLegacy;
 
 public class AerobicExercise extends Exercise {
 

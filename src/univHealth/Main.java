@@ -9,10 +9,9 @@ import java.util.Scanner;
 /*
 GUI 구현
 
-루틴이라는 개념을 어떻게 사용할 것인지 고민
+루틴이라는 개념을 어떻게 사용할 것인지?
 루틴 추천 알고리즘(가장 최근 운동 부위 제외 후 빈도 수 가장 낮은 부위 운동 추천 예정) + 중량 추천
 음식 추천 알로리즘(목표 중량, 가장 최근 섭취 음식 기반 추천 예정)
-하루일과 수정, 삭제 기능
 
 후순위
 개발 마무리 후 필요없는 getter setter 제거
@@ -167,10 +166,12 @@ public class Main {
 		System.out.println("현재 사용자 : " + currentUser.getName());
 		System.out.println(currentUser);
 		System.out.println("1. 기록 입력하기");
-		System.out.println("2. 오늘(최근) 기록 열람");
-		System.out.println("3. 나의 모든 기록 열람");
-		System.out.println("4. 특정 날짜 기록 열람");
-		System.out.println("5. 돌아가기");
+		System.out.println("2. 오늘(최근) 기록 보기");
+		System.out.println("3. 나의 모든 기록 보기");
+		System.out.println("4. 기록 자세히 보기");
+		System.out.println("5. 기록 수정");
+		System.out.println("6. 기록 삭제");
+		System.out.println("7. 돌아가기");
 	}
 
 	void userLoop(Scanner scanner) {
@@ -253,6 +254,7 @@ public class Main {
 
 	void commitLoop(Scanner scanner) {
 		commitMenu();
+		Date keyDate;
 		while (true) {
 			switch (scanner.nextInt()) {
 
@@ -269,11 +271,27 @@ public class Main {
 				break;
 
 			case 4:
-				Date keyDate = new Date(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+				System.out.println("날짜를 입력해주세요(yyyy mm dd) : ");
+				keyDate = new Date(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
 				System.out.println(currentUser.findDaily(keyDate).toStringDetail());
 				break;
 
 			case 5:
+				System.out.println("날짜를 입력해주세요(yyyy mm dd) : ");
+				keyDate = new Date(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+				currentUser.removeDaily(currentUser.findDaily(keyDate));
+				inputCommit(scanner);
+				System.out.println("수정 성공!");
+				break;
+
+			case 6:
+				System.out.println("날짜를 입력해주세요(yyyy mm dd) : ");
+				keyDate = new Date(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+				currentUser.removeDaily(currentUser.findDaily(keyDate));
+				System.out.println("삭제 성공!");
+				break;
+
+			case 7:
 				return;
 
 			default:
@@ -283,11 +301,6 @@ public class Main {
 	}
 
 	void inputCommit(Scanner scanner) {
-		System.out.println("현재 사용자로 입력을 시작합니다.(맞으면 y 입력)");
-
-		if (!scanner.next().contentEquals("y"))
-			return;
-
 		int num;
 		int year;
 		int month;
@@ -296,9 +309,8 @@ public class Main {
 		int amount;
 		String exerciseName;
 		int time;
-
-		System.out.println("===일일 입력===");
-		System.out.print("기록날짜(yyyy mm dd) : ");
+		
+		System.out.print("날짜를 입력해주세요(yyyy mm dd) : ");
 
 		year = scanner.nextInt();
 		month = scanner.nextInt();

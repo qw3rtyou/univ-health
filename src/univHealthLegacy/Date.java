@@ -1,4 +1,4 @@
-package univHealth.copy;
+package univHealthLegacy;
 
 public class Date implements Comparable<Date> {
 	int year;
