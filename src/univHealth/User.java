@@ -4,21 +4,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
-public class User {
+public class User implements Manageable {
 	private String name;
 	private double height;
 	private double weight;
 	private String gender;
 	private int goal; // 목표체중
 	ArrayList<DailyInfo> dailyInfos = new ArrayList<>();
+	Manager dailyManager = new Manager();
 
-	public User(String name, double height, double weight, String gender, int goal) {
+	public User(String name, double height, double weight, String gender, int goal) { // 생성자 오버로딩 - 직접 객체 생성 시 사용
 		this.name = name;
 		this.height = height;
 		this.weight = weight;
 		this.gender = gender;
 		this.goal = goal;
+	}
+
+	public User() { // 생성자 오버로딩 - Fatory create용
+		//비어있어야함
 	}
 
 	DailyInfo findDaily(Date date) {
@@ -127,7 +133,7 @@ public class User {
 		int size = dailyInfos.size();
 		return dailyInfos.get(size - 1);
 	}
-	
+
 	public String toStringforUserFile() {
 		return name + " " + height + " " + weight + " " + gender + " " + goal;
 	}
@@ -147,7 +153,7 @@ public class User {
 	}
 
 	public String toStringforExerciseFile() {
-		name=name.trim();
+		name = name.trim();
 		String buf = "";
 		ArrayList<UserExercise> userExercises;
 		for (DailyInfo dailyInfo : dailyInfos) {
@@ -159,6 +165,22 @@ public class User {
 		}
 
 		return buf;
+	}
+
+	@Override
+	public void read(Scanner scan) {
+		String line = scan.nextLine();
+		String[] parts = line.split(" ");
+		name = parts[0];
+		height = Double.parseDouble(parts[1]);
+		weight = Double.parseDouble(parts[2]);
+		gender = parts[3];
+		goal = Integer.parseInt(parts[4]);
+	}
+
+	@Override
+	public boolean matches(String kwd) {
+		return false;
 	}
 
 	public ArrayList<DailyInfo> getDailyInfos() {

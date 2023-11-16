@@ -1,13 +1,10 @@
 package univHealth;
 
-public class Food {
+import java.util.Scanner;
+
+public class Food implements Manageable {
 	private String name;
 	private Nutrition nutrition;
-
-	public Food(String name, Nutrition nutrition) {
-		this.name = name;
-		this.nutrition = nutrition;
-	}
 
 	@Override
 	public String toString() {
@@ -16,6 +13,22 @@ public class Food {
 
 	Double getCalRatio() {
 		return nutrition.getCalRatio();
+	}
+
+	@Override
+	public void read(Scanner scan) {
+		String line = scan.nextLine();
+		String[] parts = line.split(" ");
+		name = parts[0];
+		double carbs = Double.parseDouble(parts[1]);
+		double protein = Double.parseDouble(parts[2]);
+		double fat = Double.parseDouble(parts[3]);
+		nutrition = new Nutrition(carbs, protein, fat);
+	}
+
+	@Override
+	public boolean matches(String kwd) {
+		return false;
 	}
 
 	public String getName() {

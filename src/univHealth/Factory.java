@@ -1,5 +1,7 @@
 package univHealth;
 
+import java.util.Scanner;
+
 public interface Factory {
-	public Manageable create();
+	public Manageable create(Scanner filein);
 }

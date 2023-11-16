@@ -14,7 +14,7 @@ public class DailyInfo implements Comparable<DailyInfo> {
 	@Override
 	public String toString() {
 		String buf = date.toString();
-		buf+="\n-------------------\n";
+		buf += "\n-------------------\n";
 		buf += "===칼로리정보===\n";
 		for (UserFood eatenFood : eatenFoods) {
 			buf += eatenFood.toString();

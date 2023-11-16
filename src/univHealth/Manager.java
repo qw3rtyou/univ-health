@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Manager {
-	
 	ArrayList<Manageable> mList = new ArrayList<>();
 
 	Scanner openFile(String filename) {
@@ -24,14 +23,14 @@ public class Manager {
 		Scanner filein = openFile(filename);
 		Manageable m = null;
 		while (filein.hasNext()) {
-			m = factory.create();
+			m = factory.create(filein);
 			m.read(filein);
 			mList.add(m);
 		}
 		filein.close();
 	}
 
-	void printAll() {
+	void printAll() {	
 		for (Manageable m : mList) {
 			System.out.println(m.toString());
 		}
@@ -57,5 +56,9 @@ public class Manager {
 				return m;
 		}
 		return null;
+	}
+	
+	public ArrayList<Manageable> getmList() {
+		return mList;
 	}
 }

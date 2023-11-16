@@ -1,13 +1,26 @@
 package univHealth;
 
-public class AerobicExercise extends Exercise {
+import java.util.Scanner;
 
-	public AerobicExercise(String name, String type, Double mets) {
-		super(name, type, mets);
-	}
-    
+public class AerobicExercise extends Exercise implements Manageable {
 	@Override
 	public String toString() {
-		return super.toString();
+		String buf = "";
+		buf += "이름 : " + name + "(유산소)";
+		buf += "\nMETs(운동강도) : " + mets + "\n";
+		return buf;
+	}
+
+	@Override
+	public void read(Scanner scan) {
+		String line = scan.nextLine();
+		String[] parts = line.split(" ");
+		name = parts[1];
+		mets = Double.parseDouble(parts[2]);
+	}
+
+	@Override
+	public boolean matches(String kwd) {
+		return false;
 	}
 }

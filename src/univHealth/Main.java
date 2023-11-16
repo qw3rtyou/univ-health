@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /*
@@ -38,15 +37,15 @@ Factory, Manager 적용
  */
 
 public class Main {
-	public static ArrayList<Food> foods;
-	public static ArrayList<User> users;
-	public static ArrayList<Exercise> exercises;
+	static Manager userManager = new Manager();
+	static Manager foodManager = new Manager();
+	static Manager exerciseManager = new Manager();
 	static User currentUser;
 
 	final String FILE_PATH_USER = "user_data.txt";
 	final String FILE_PATH_FOOD = "food_data.txt";
-	final String FILE_PATH_USERFOOD = "user_food_data.txt";
 	final String FILE_PATH_EXERCISE = "exercise_data.txt";
+	final String FILE_PATH_USERFOOD = "user_food_data.txt";
 	final String FILE_PATH_USEREXERCISE = "user_exercise_data.txt";
 
 	public static void main(String[] args) {
@@ -56,23 +55,45 @@ public class Main {
 
 	void test() {
 		System.out.println("\n\n\n\n\n1. 모든 파일음식 출력");
-		System.out.println(foods);
+		foodManager.printAll();
 
-		System.out.println("\n\n\n\n\n2. 모든 파일유저 출력");
-		System.out.println(users);
+		System.out.println("\n\n\n\n\n2. 모든 파일운동 출력");
+		exerciseManager.printAll();
 
-		System.out.println("\n\n\n\n\n3. 모든 파일운동 출력");
-		System.out.println(exercises);
+		System.out.println("\n\n\n\n\n3. 모든 파일유저 출력");
+		userManager.printAll();
 
 		System.out.println("\n\n\n\n\n4. 현재 유저 출력");
 		System.out.println(currentUser);
 	}
 
 	void init() {
-		users = loadUsersFromFile(FILE_PATH_USER);
-		foods = loadFoodsFromFile(FILE_PATH_FOOD);
+		userManager.readAll(FILE_PATH_USER, new Factory() {
+
+			@Override
+			public Manageable create(Scanner scanner) {
+				return new User();
+			}
+		});
+		foodManager.readAll(FILE_PATH_FOOD, new Factory() {
+			@Override
+			public Manageable create(Scanner scanner) {
+				return new Food();
+			}
+		});
+
+		exerciseManager.readAll(FILE_PATH_EXERCISE, new Factory() {
+			@Override
+			public Manageable create(Scanner scanner) {
+				if(scanner.next().equals("무산소")) {
+					return new AnaerobicExercise();
+				}
+				return new AerobicExercise();
+			}
+		});
+
+		//두 개 파일도 Manager를 통해 관리하려면, Manager를 관리하는 인터페이스가 필요함(별개의 Manager가 필요)
 		loadDailyFoodFromFile(FILE_PATH_USERFOOD);
-		exercises = loadExercisesFromFile(FILE_PATH_EXERCISE);
 		loadDailyExerciseFromFile(FILE_PATH_USEREXERCISE);
 	}
 
@@ -80,7 +101,7 @@ public class Main {
 		init();
 
 		Scanner scanner = new Scanner(System.in);
-		currentUser = new User("아직 설정되지 않음", 0, 0, "NaN", 0);
+		currentUser = new User();//
 
 		while (true) {
 			menu();
@@ -191,7 +212,7 @@ public class Main {
 				gender = scanner.next();
 				System.out.println("사용자 목표 체중 : ");
 				goal = scanner.nextInt();
-				users.add(new User(name, height, weight, gender, goal));
+				userManager.mList.add(new User(name, height, weight, gender, goal));
 				System.out.println("계정 생성 성공");
 				break;
 
@@ -221,7 +242,7 @@ public class Main {
 				if (user == null)
 					System.out.println("사용자를 찾을 수 없습니다");
 				else
-					users.remove(user);
+					userManager.mList.remove(user);
 				break;
 
 			case 5:
@@ -324,8 +345,8 @@ public class Main {
 
 	void saveCurrentState() {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH_USER))) {
-			for (User user : users) {
-				writer.write(user.toStringforUserFile());
+			for (Manageable user : userManager.getmList()) {
+				writer.write(((User) user).toStringforUserFile());
 				writer.newLine();
 			}
 		} catch (IOException e) {
@@ -333,16 +354,16 @@ public class Main {
 		}
 
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH_USERFOOD))) {
-			for (User user : users) {
-				writer.write(user.toStringforFoodFile());
+			for (Manageable user : userManager.getmList()) {
+				writer.write(((User) user).toStringforFoodFile());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH_USEREXERCISE))) {
-			for (User user : users) {
-				writer.write(user.toStringforExerciseFile());
+			for (Manageable user : userManager.getmList()) {
+				writer.write(((User) user).toStringforExerciseFile());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -350,93 +371,30 @@ public class Main {
 	}
 
 	static User findUserByName(String kwd) {
-		for (User user : users) {
-			if (user.getName().contentEquals(kwd))
-				return user;
+		for (Manageable user : userManager.getmList()) {
+			if (((User) user).getName().contentEquals(kwd))
+				return ((User) user);
 		}
 		return null;
 	}
 
 	static Food findFoodByName(String kwd) {
-		for (Food food : foods) {
-			if (food.getName().contentEquals(kwd))
-				return food;
+		for (Manageable food : foodManager.getmList()) {
+			if (((Food) food).getName().contentEquals(kwd))
+				return (Food) food;
 		}
 		return null;
 	}
 
 	static Exercise findExerciseByName(String kwd) {
-		for (Exercise exercise : exercises) {
-			if (exercise.getName().contentEquals(kwd))
-				return exercise;
+		for (Manageable exercise : exerciseManager.getmList()) {
+			if (((Exercise) exercise).getName().contentEquals(kwd))
+				return (Exercise) exercise;
 		}
 		return null;
 	}
 
-	public static ArrayList<Food> loadFoodsFromFile(String filename) {
-		ArrayList<Food> foods = new ArrayList<>();
-		try (Scanner scanner = new Scanner(new File(filename))) {
-			while (scanner.hasNextLine()) {
-				String line = scanner.nextLine();
-				String[] parts = line.split(" ");
-				String name = parts[0];
-				double carbs = Double.parseDouble(parts[1]);
-				double protein = Double.parseDouble(parts[2]);
-				double fat = Double.parseDouble(parts[3]);
-				foods.add(new Food(name, new Nutrition(carbs, protein, fat)));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return foods;
-	}
-
-	public static ArrayList<Exercise> loadExercisesFromFile(String filename) {
-		ArrayList<Exercise> exercises = new ArrayList<>();
-		try (Scanner scanner = new Scanner(new File(filename))) {
-			while (scanner.hasNextLine()) {
-				String line = scanner.nextLine();
-				String[] parts = line.split(" ");
-				String type = parts[0];
-				String name = parts[1];
-				Double mets = Double.parseDouble(parts[2]);
-				String part;
-				Exercise exercise;
-
-				if (type.contentEquals("무산소")) {
-					part = parts[3];
-					exercise = new AnaerobicExercise(name, type, mets, part);
-				} else
-					exercise = new AerobicExercise(name, type, mets);
-
-				exercises.add(exercise);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return exercises;
-	}
-
-	public static ArrayList<User> loadUsersFromFile(String filename) {
-		ArrayList<User> users = new ArrayList<>();
-		try (Scanner scanner = new Scanner(new File(filename))) {
-			while (scanner.hasNextLine()) {
-				String line = scanner.nextLine();
-				String[] parts = line.split(" ");
-				String name = parts[0];
-				double height = Double.parseDouble(parts[1]);
-				double weight = Double.parseDouble(parts[2]);
-				String gender = parts[3];
-				int goal = Integer.parseInt(parts[4]);
-				users.add(new User(name, height, weight, gender, goal));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return users;
-	}
-
-	public static void loadDailyFoodFromFile(String filename) {
+	public void loadDailyFoodFromFile(String filename) {
 		try (Scanner scanner = new Scanner(new File(filename))) {
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
@@ -503,4 +461,5 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
+
 }
