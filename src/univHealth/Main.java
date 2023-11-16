@@ -85,14 +85,14 @@ public class Main {
 		exerciseManager.readAll(FILE_PATH_EXERCISE, new Factory() {
 			@Override
 			public Manageable create(Scanner scanner) {
-				if(scanner.next().equals("무산소")) {
+				if (scanner.next().equals("무산소")) {
 					return new AnaerobicExercise();
 				}
 				return new AerobicExercise();
 			}
 		});
 
-		//두 개 파일도 Manager를 통해 관리하려면, Manager를 관리하는 인터페이스가 필요함(별개의 Manager가 필요)
+		// 두 개 파일도 Manager를 통해 관리하려면, Manager를 관리하는 인터페이스가 필요함(별개의 Manager가 필요)
 		loadDailyFoodFromFile(FILE_PATH_USERFOOD);
 		loadDailyExerciseFromFile(FILE_PATH_USEREXERCISE);
 	}
@@ -194,7 +194,7 @@ public class Main {
 			switch (scanner.nextInt()) {
 			case 1:
 				System.out.println("사용자 이름 : ");
-				user = findUserByName(scanner.next());
+				user = findUserByKeyword(scanner.next());
 				if (user == null)
 					System.out.println("사용자를 찾을 수 없습니다");
 				else
@@ -218,7 +218,7 @@ public class Main {
 
 			case 3:
 				System.out.println("사용자 이름 : ");
-				user = findUserByName(scanner.next());
+				user = findUserByKeyword(scanner.next());
 				if (user == null)
 					System.out.println("사용자를 찾을 수 없습니다");
 				else {
@@ -238,7 +238,7 @@ public class Main {
 				break;
 			case 4:
 				System.out.println("사용자 이름 : ");
-				user = findUserByName(scanner.next());
+				user = findUserByKeyword(scanner.next());
 				if (user == null)
 					System.out.println("사용자를 찾을 수 없습니다");
 				else
@@ -298,7 +298,7 @@ public class Main {
 		for (int i = 0; i < num; i++) {
 			System.out.print(i + 1 + "번째 음식명 : ");
 			foodName = scanner.next();
-			Food food = findFoodByName(foodName);
+			Food food = findFoodByKeyword(foodName);
 			if (food == null) {
 				i--;
 				System.out.println("미등록 음식 - 유사한 다른 음식을 선택해 주세요");
@@ -316,7 +316,7 @@ public class Main {
 		for (int i = 0; i < num; i++) {
 			System.out.print(i + 1 + "번째 운동 이름 : ");
 			exerciseName = scanner.next();
-			Exercise exercise = findExerciseByName(exerciseName);
+			Exercise exercise = findExerciseByKeyword(exerciseName);
 			if (exercise == null) {
 				i--;
 				System.out.println("미등록 운동 - 유사한 다른 운동을 선택해 주세요");
@@ -370,25 +370,25 @@ public class Main {
 		}
 	}
 
-	static User findUserByName(String kwd) {
+	static User findUserByKeyword(String kwd) {
 		for (Manageable user : userManager.getmList()) {
-			if (((User) user).getName().contentEquals(kwd))
+			if (user.matches(kwd))
 				return ((User) user);
 		}
 		return null;
 	}
 
-	static Food findFoodByName(String kwd) {
+	static Food findFoodByKeyword(String kwd) {
 		for (Manageable food : foodManager.getmList()) {
-			if (((Food) food).getName().contentEquals(kwd))
+			if (food.matches(kwd))
 				return (Food) food;
 		}
 		return null;
 	}
 
-	static Exercise findExerciseByName(String kwd) {
+	static Exercise findExerciseByKeyword(String kwd) {
 		for (Manageable exercise : exerciseManager.getmList()) {
-			if (((Exercise) exercise).getName().contentEquals(kwd))
+			if (exercise.matches(kwd))
 				return (Exercise) exercise;
 		}
 		return null;
@@ -404,7 +404,7 @@ public class Main {
 				int month = Integer.parseInt(parts[2]);
 				int day = Integer.parseInt(parts[3]);
 				int num = Integer.parseInt(parts[4]);
-				User user = findUserByName(name);
+				User user = findUserByKeyword(name);
 				Date date = new Date(year, month, day);
 
 				if (user.isDailyFoodExist(date)) {
@@ -418,7 +418,7 @@ public class Main {
 					parts = line.split(" ");
 					String foodName = parts[0];
 					int foodsize = Integer.parseInt(parts[1]);
-					Food food = findFoodByName(foodName);
+					Food food = findFoodByKeyword(foodName);
 					user.findDaily(date).addFoodEaten(new UserFood(food, foodsize));
 				}
 			}
@@ -437,7 +437,7 @@ public class Main {
 				int month = Integer.parseInt(parts[2]);
 				int day = Integer.parseInt(parts[3]);
 				int num = Integer.parseInt(parts[4]);
-				User user = findUserByName(name);
+				User user = findUserByKeyword(name);
 				Date date = new Date(year, month, day);
 
 				if (user.isDailyExerciseExist(date)) {
@@ -453,7 +453,7 @@ public class Main {
 					parts = line.split(" ");
 					String exerciseName = parts[0];
 					int duration = Integer.parseInt(parts[1]);
-					Exercise exercise = findExerciseByName(exerciseName);
+					Exercise exercise = findExerciseByKeyword(exerciseName);
 					user.findDaily(date).addExerciseDone(new UserExercise(exercise, user.getWeight(), duration));
 				}
 			}

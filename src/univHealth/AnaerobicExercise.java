@@ -23,6 +23,6 @@ public class AnaerobicExercise extends Exercise implements Manageable {
 
 	@Override
 	public boolean matches(String kwd) {
-		return false;
+		return kwd.equals(name);
 	}
 }

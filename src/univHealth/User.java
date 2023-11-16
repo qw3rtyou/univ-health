@@ -24,7 +24,7 @@ public class User implements Manageable {
 	}
 
 	public User() { // 생성자 오버로딩 - Fatory create용
-		//비어있어야함
+		// 비어있어야함
 	}
 
 	DailyInfo findDaily(Date date) {
@@ -180,7 +180,7 @@ public class User implements Manageable {
 
 	@Override
 	public boolean matches(String kwd) {
-		return false;
+		return kwd.equals(name);
 	}
 
 	public ArrayList<DailyInfo> getDailyInfos() {
