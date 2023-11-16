@@ -9,13 +9,10 @@ import java.util.Scanner;
 /*
 GUI 구현
 
-Factory, Manager 적용
-제네릭 적용
 루틴이라는 개념을 어떻게 사용할 것인지 고민
 루틴 추천 알고리즘(가장 최근 운동 부위 제외 후 빈도 수 가장 낮은 부위 운동 추천 예정) + 중량 추천
 음식 추천 알로리즘(목표 중량, 가장 최근 섭취 음식 기반 추천 예정)
 하루일과 수정, 삭제 기능
-중복되는 코드가 너무 많음 -> 리펙토링 해야함
 
 후순위
 개발 마무리 후 필요없는 getter setter 제거
@@ -194,7 +191,7 @@ public class Main {
 			switch (scanner.nextInt()) {
 			case 1:
 				System.out.println("사용자 이름 : ");
-				user = findUserByKeyword(scanner.next());
+				user = (User) userManager.find(scanner.next());
 				if (user == null)
 					System.out.println("사용자를 찾을 수 없습니다");
 				else
@@ -218,7 +215,7 @@ public class Main {
 
 			case 3:
 				System.out.println("사용자 이름 : ");
-				user = findUserByKeyword(scanner.next());
+				user = (User) userManager.find(scanner.next());
 				if (user == null)
 					System.out.println("사용자를 찾을 수 없습니다");
 				else {
@@ -238,7 +235,7 @@ public class Main {
 				break;
 			case 4:
 				System.out.println("사용자 이름 : ");
-				user = findUserByKeyword(scanner.next());
+				user = (User) userManager.find(scanner.next());
 				if (user == null)
 					System.out.println("사용자를 찾을 수 없습니다");
 				else
@@ -298,7 +295,7 @@ public class Main {
 		for (int i = 0; i < num; i++) {
 			System.out.print(i + 1 + "번째 음식명 : ");
 			foodName = scanner.next();
-			Food food = findFoodByKeyword(foodName);
+			Food food = (Food) foodManager.find(foodName);
 			if (food == null) {
 				i--;
 				System.out.println("미등록 음식 - 유사한 다른 음식을 선택해 주세요");
@@ -316,7 +313,7 @@ public class Main {
 		for (int i = 0; i < num; i++) {
 			System.out.print(i + 1 + "번째 운동 이름 : ");
 			exerciseName = scanner.next();
-			Exercise exercise = findExerciseByKeyword(exerciseName);
+			Exercise exercise = (Exercise) exerciseManager.find(exerciseName);
 			if (exercise == null) {
 				i--;
 				System.out.println("미등록 운동 - 유사한 다른 운동을 선택해 주세요");
@@ -370,30 +367,6 @@ public class Main {
 		}
 	}
 
-	static User findUserByKeyword(String kwd) {
-		for (Manageable user : userManager.getmList()) {
-			if (user.matches(kwd))
-				return ((User) user);
-		}
-		return null;
-	}
-
-	static Food findFoodByKeyword(String kwd) {
-		for (Manageable food : foodManager.getmList()) {
-			if (food.matches(kwd))
-				return (Food) food;
-		}
-		return null;
-	}
-
-	static Exercise findExerciseByKeyword(String kwd) {
-		for (Manageable exercise : exerciseManager.getmList()) {
-			if (exercise.matches(kwd))
-				return (Exercise) exercise;
-		}
-		return null;
-	}
-
 	public void loadDailyFoodFromFile(String filename) {
 		try (Scanner scanner = new Scanner(new File(filename))) {
 			while (scanner.hasNextLine()) {
@@ -404,7 +377,7 @@ public class Main {
 				int month = Integer.parseInt(parts[2]);
 				int day = Integer.parseInt(parts[3]);
 				int num = Integer.parseInt(parts[4]);
-				User user = findUserByKeyword(name);
+				User user = (User) userManager.find(name);
 				Date date = new Date(year, month, day);
 
 				if (user.isDailyFoodExist(date)) {
@@ -418,7 +391,7 @@ public class Main {
 					parts = line.split(" ");
 					String foodName = parts[0];
 					int foodsize = Integer.parseInt(parts[1]);
-					Food food = findFoodByKeyword(foodName);
+					Food food = (Food) foodManager.find(foodName);
 					user.findDaily(date).addFoodEaten(new UserFood(food, foodsize));
 				}
 			}
@@ -437,7 +410,7 @@ public class Main {
 				int month = Integer.parseInt(parts[2]);
 				int day = Integer.parseInt(parts[3]);
 				int num = Integer.parseInt(parts[4]);
-				User user = findUserByKeyword(name);
+				User user = (User) userManager.find(name);
 				Date date = new Date(year, month, day);
 
 				if (user.isDailyExerciseExist(date)) {
@@ -453,7 +426,7 @@ public class Main {
 					parts = line.split(" ");
 					String exerciseName = parts[0];
 					int duration = Integer.parseInt(parts[1]);
-					Exercise exercise = findExerciseByKeyword(exerciseName);
+					Exercise exercise = (Exercise) exerciseManager.find(exerciseName);
 					user.findDaily(date).addExerciseDone(new UserExercise(exercise, user.getWeight(), duration));
 				}
 			}
