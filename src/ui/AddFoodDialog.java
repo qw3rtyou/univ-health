@@ -55,7 +55,5 @@ public class AddFoodDialog extends javax.swing.JDialog {
 			}
 		});
 	}	
-	
-	
 
 }

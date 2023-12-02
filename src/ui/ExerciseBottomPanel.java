@@ -6,21 +6,38 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class ExerciseBottomPanel extends JPanel {
 
+	JTextField kwdTextField = new JTextField("", 20);
+	JTextField edit;
+
 	void setupBottomPane(TableSelectionDemo tableDemo) {
 
-		JPanel topPane = new JPanel();
+		JPanel bottomPane = new JPanel();
 
-		JButton addExercise = new JButton("추가");
-		topPane.add(addExercise, BorderLayout.SOUTH);
-		add(topPane, BorderLayout.PAGE_START);
+		bottomPane.add(kwdTextField, BorderLayout.CENTER);
+
+		JButton search = new JButton("검색");
+		bottomPane.add(search, BorderLayout.LINE_END);
+
+		JButton addExercise = new JButton("운동추가");
+		bottomPane.add(addExercise, BorderLayout.SOUTH);
+		add(bottomPane, BorderLayout.PAGE_START);
+
+		search.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getActionCommand().equals("검색")) {
+					tableDemo.loadData(kwdTextField.getText());
+				}
+			}
+		});
 
 		addExercise.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (e.getActionCommand().equals("유저 추가")) {
+				if (e.getActionCommand().equals("운동 추가")) {
 					tableDemo.addExercise();
 				}
 			}

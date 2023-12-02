@@ -41,7 +41,7 @@ public class AddUserExerciseDialog extends javax.swing.JDialog {
 		add(new JLabel("날짜"));
 		add(dateField);
 		add(new JLabel("운동이름"));
-		add(nameField);
+		add(nameField);	
 		add(new JLabel("운동 시간"));
 		add(sizeField);
 		add(addFoodButton);
