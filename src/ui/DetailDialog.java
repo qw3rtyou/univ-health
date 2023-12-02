@@ -9,8 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import health.UserExerciseMgr;
+import health.User;
 import health.UserFoodMgr;
+import health.UserMgr;
 
 public class DetailDialog extends javax.swing.JDialog {
 	private static final long serialVersionUID = 1L;
@@ -28,13 +29,15 @@ public class DetailDialog extends javax.swing.JDialog {
 	}
 
 	void setup() {
+		User user = UserMgr.getInstance().find(userDetails[0]);
+
 		JTabbedPane jtab = new JTabbedPane();
 		userExercisePane = new JPanel(new BorderLayout());
 		userExerciseTable.tableTitle = "userexercise";
-		userExerciseTable.addComponentsToPane(new UserExerciseMgr());
+		userExerciseTable.addComponentsToPane(user.dailyInfos.get(1).userExerciseMgr);
 		userExercisePane.add(userExerciseTable, BorderLayout.CENTER);
 		jtab.add("운동정보", userExercisePane);
-		
+
 		userFoodPane = new JPanel(new BorderLayout());
 		userFoodTable.tableTitle = "userfood";
 		userFoodTable.addComponentsToPane(new UserFoodMgr());

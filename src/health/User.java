@@ -13,7 +13,7 @@ public class User implements Manageable, UIData {
 	double weight;
 	String gender;
 	int goal;
-	ArrayList<DailyInfo> dailyInfos = new ArrayList<>();
+	public ArrayList<DailyInfo> dailyInfos = new ArrayList<>();
 
 	public User(String name, double height, double weight, String gender, int goal) {
 		this.name = name;

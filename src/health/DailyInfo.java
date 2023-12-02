@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class DailyInfo implements Comparable<DailyInfo> {
 	private ArrayList<UserFood> eatenFoods = new ArrayList<>();
 //	private ArrayList<UserExercise> exercises = new ArrayList<>();
-	UserFoodMgr userFoodMgr=new UserFoodMgr();
-	UserExerciseMgr userExerciseMgr=new UserExerciseMgr();
+	public UserFoodMgr userFoodMgr=new UserFoodMgr();
+	public UserExerciseMgr userExerciseMgr=new UserExerciseMgr();
 	
 	private Date date;
 

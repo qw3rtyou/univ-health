@@ -2,14 +2,14 @@ package health;
 
 import facade.DataEngineImplExerciseList;
 
-public class UserExerciseMgr extends DataEngineImplExerciseList<UserExercise> {
+public class UserDailyMgr extends DataEngineImplExerciseList<UserExercise> {
 	private static final long serialVersionUID = 1L;
 
-	public UserExerciseMgr() {
+	public UserDailyMgr() {
 		setLabels(headers);
 	}
 
-	private String headers[] = { "운동 날짜", "운동명", "중량", "시간", "칼로리 소모", };
+	private String headers[] = { "날짜", "활동명" };
 
 	@Override
 	public void addElement(UserExercise a) {
