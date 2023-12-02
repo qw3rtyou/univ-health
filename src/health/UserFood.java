@@ -1,8 +1,13 @@
 package health;
 
-public class UserFood {
-	private int size;
-	private int cal;
+import java.util.Scanner;
+
+import facade.UIData;
+import mgr.Manageable;
+
+public class UserFood implements Manageable, UIData{
+	int size;
+	int cal;
 	Food food;
 
 	public UserFood(Food food, int size) {
@@ -16,27 +21,29 @@ public class UserFood {
 		return "음식 이름 : " + food.name + "\n먹은 양 : " + size + "g\n칼로리 : " + cal + "cal\n";
 	}
 
-	public int getSize() {
-		return size;
+	@Override
+	public void read(Scanner scan) {
 	}
 
-	public void setSize(int size) {
-		this.size = size;
+	@Override
+	public void print() {
 	}
 
-	public int getCal() {
-		return cal;
+	@Override
+	public boolean matches(String kwd) {
+		return kwd.equals(food.name);
 	}
 
-	public void setCal(int cal) {
-		this.cal = cal;
+	@Override
+	public void set(Object[] uitexts) {
 	}
 
-	public Food getFood() {
-		return food;
-	}
-
-	public void setFood(Food food) {
-		this.food = food;
+	@Override
+	public String[] getUiTexts() {
+		String[] texts = new String[3];
+		texts[0] = food.name;
+		texts[1] = ""+cal;
+		texts[2] = ""+size;
+		return texts;
 	}
 }

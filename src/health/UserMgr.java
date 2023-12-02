@@ -14,7 +14,7 @@ public class UserMgr extends DataEngineImpl<User> {
 	
 	String[] headers = { "이름", "키", "성별", "몸무게", "목표체중" };
 
-	public void addUser(User user) { UserMgr.mgr.mList.add(user); }
+	public void addUser(User user) { mList.add(user); }
 	
 	public void addNewItem(String[] editTexts) {
 		User u = new User();

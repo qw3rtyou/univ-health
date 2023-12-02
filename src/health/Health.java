@@ -19,6 +19,19 @@ public class Health {
 	}
 
 	Scanner scan = new Scanner(System.in);
+	
+	public void test() {	//삭제
+		for (User user : UserMgr.getInstance().mList) {
+			for(DailyInfo dailyInfo : user.dailyInfos) {
+				for (UserExercise userExercise : dailyInfo.userExerciseMgr) {
+					System.out.println(userExercise);
+				}
+//				for (UserFood userFood : dailyInfo.userFoodMgr) {
+//					System.out.println(userExercise);
+//				}
+			}
+		}
+	}
 
 	public void run() {
 		ExerciseMgr.getInstance().readAll("exercise_data.txt", new Factory<Exercise>() {
@@ -43,6 +56,7 @@ public class Health {
 	public static void main(String[] args) {
 		Health health = new Health();
 		health.run();
+		health.test();		//삭제
 		GUIMain.startGUI();
 	}
 
@@ -106,7 +120,7 @@ public class Health {
 					String exerciseName = parts[0];
 					int duration = Integer.parseInt(parts[1]);
 					Exercise exercise = (Exercise) ExerciseMgr.getInstance().find(exerciseName);
-					user.findDaily(date).addExerciseDone(new UserExercise(exercise, user.weight, duration));
+					user.findDaily(date).userExerciseMgr.add(new UserExercise(exercise, user.weight, duration));
 				}
 			}
 		} catch (Exception e) {

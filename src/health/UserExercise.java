@@ -1,6 +1,11 @@
 package health;
 
-public class UserExercise {
+import java.util.Scanner;
+
+import facade.UIData;
+import mgr.Manageable;
+
+public class UserExercise implements Manageable, UIData {
 	Exercise exercise;
 	Double weight;
 	int duration;
@@ -18,35 +23,30 @@ public class UserExercise {
 		return exercise.toString() + "운동시간 : " + duration + "\n총 칼로리 소모 : " + caloriesBurned + "\n";
 	}
 
-	public Exercise getExercise() {
-		return exercise;
+	@Override
+	public void read(Scanner scan) {
 	}
 
-	public void setExercise(Exercise exercise) {
-		this.exercise = exercise;
+	@Override
+	public void print() {
 	}
 
-	public Double getWeight() {
-		return weight;
+	@Override
+	public boolean matches(String kwd) {
+		return kwd.equals(exercise.name);
 	}
 
-	public void setWeight(Double weights) {
-		this.weight = weights;
+	@Override
+	public void set(Object[] uitexts) {
 	}
 
-	public int getCaloriesBurned() {
-		return caloriesBurned;
-	}
-
-	public void setCaloriesBurned(int caloriesBurned) {
-		this.caloriesBurned = caloriesBurned;
-	}
-
-	public int getDuration() {
-		return duration;
-	}
-
-	public void setDuration(int duration) {
-		this.duration = duration;
+	@Override
+	public String[] getUiTexts() {
+		String[] texts = new String[4];
+		texts[0] = exercise.name;
+		texts[1] = ""+weight;
+		texts[2] = ""+duration;
+		texts[3] = ""+caloriesBurned;
+		return texts;
 	}
 }

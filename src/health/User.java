@@ -164,7 +164,7 @@ public class User implements Manageable, UIData {
 
 	Boolean isDailyExerciseExist(Date date) {
 		for (DailyInfo dailyInfo : dailyInfos) {
-			if (dailyInfo.getDate().equals(date) && !dailyInfo.getExercises().isEmpty())
+			if (dailyInfo.getDate().equals(date) && !dailyInfo.userExerciseMgr.isEmpty())
 				return true;
 		}
 		return false;
@@ -206,7 +206,7 @@ public class User implements Manageable, UIData {
 			userFoods = dailyInfo.getEatenFoods();
 			buf += name + " " + dailyInfo.getDate().toString() + " " + userFoods.size() + "\n";
 			for (UserFood userFood : userFoods) {
-				buf += userFood.getFood().name + " " + userFood.getSize() + "\n";
+				buf += userFood.food.name + " " + userFood.size + "\n";
 			}
 		}
 
@@ -218,10 +218,10 @@ public class User implements Manageable, UIData {
 		String buf = "";
 		ArrayList<UserExercise> userExercises;
 		for (DailyInfo dailyInfo : dailyInfos) {
-			userExercises = dailyInfo.getExercises();
+			userExercises = dailyInfo.userExerciseMgr;
 			buf += name + " " + dailyInfo.getDate().toString() + " " + userExercises.size() + "\n";
 			for (UserExercise userExercise : userExercises) {
-				buf += userExercise.getExercise().name + " " + userExercise.getDuration() + "\n";
+				buf += userExercise.exercise.name + " " + userExercise.duration + "\n";
 			}
 		}
 

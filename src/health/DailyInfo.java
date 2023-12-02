@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 public class DailyInfo implements Comparable<DailyInfo> {
 	private ArrayList<UserFood> eatenFoods = new ArrayList<>();
-	private ArrayList<UserExercise> exercises = new ArrayList<>();
+//	private ArrayList<UserExercise> exercises = new ArrayList<>();
+	UserFoodMgr userFoodMgr=new UserFoodMgr();
+	UserExerciseMgr userExerciseMgr=new UserExerciseMgr();
+	
 	private Date date;
 
 	public DailyInfo(Date date) {
@@ -18,7 +21,7 @@ public class DailyInfo implements Comparable<DailyInfo> {
 		if (eatenFoods.size() != 0)
 			buf += "칼로리 - 기록있음\n";
 
-		if (exercises.size() != 0)
+		if (userExerciseMgr.size() != 0)
 			buf += "운동 - 기록있음\n";
 
 		return buf;
@@ -33,7 +36,7 @@ public class DailyInfo implements Comparable<DailyInfo> {
 		}
 
 		buf += "===운동정보===\n";
-		for (UserExercise exercise : exercises) {
+		for (UserExercise exercise : userExerciseMgr) {
 			buf += exercise.toString();
 		}
 
@@ -43,15 +46,15 @@ public class DailyInfo implements Comparable<DailyInfo> {
 	int getDailyCalInput() {
 		int sum = 0;
 		for (UserFood userFood : eatenFoods) {
-			sum += userFood.getCal();
+			sum += userFood.cal;
 		}
 		return sum;
 	}
 
 	int getDailyCalOuput() {
 		int sum = 0;
-		for (UserExercise userExercise : exercises) {
-			userExercise.getCaloriesBurned();
+		for (UserExercise userExercise : userExerciseMgr) {
+			sum += userExercise.caloriesBurned;
 		}
 		return sum;
 	}
@@ -62,14 +65,6 @@ public class DailyInfo implements Comparable<DailyInfo> {
 
 	public void setEatenFoods(ArrayList<UserFood> eatenFoods) {
 		this.eatenFoods = eatenFoods;
-	}
-
-	public ArrayList<UserExercise> getExercises() {
-		return exercises;
-	}
-
-	public void setExercises(ArrayList<UserExercise> exercises) {
-		this.exercises = exercises;
 	}
 
 	public Date getDate() {
@@ -85,7 +80,7 @@ public class DailyInfo implements Comparable<DailyInfo> {
 	}
 
 	public void addExerciseDone(UserExercise exercise) {
-		exercises.add(exercise);
+		userExerciseMgr.add(exercise);
 	}
 
 	@Override
