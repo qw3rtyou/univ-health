@@ -60,6 +60,13 @@ public class TableSelectionDemo extends JPanel implements ListSelectionListener 
 			tableModel.addRow(((UIData) m).getUiTexts());
 	}
 	
+	void loadData(IDataEngine<?> dataMgr) {
+	    List<?> result = dataMgr.search("");
+	    for (Object m : result) {
+	        tableModel.addRow(((UIData) m).getUiTexts());
+	    }
+	}
+	
 	void showDetail() {
 		if (selectedIndex < 0)
 			return;

@@ -156,7 +156,7 @@ public class User implements Manageable, UIData {
 
 	Boolean isDailyFoodExist(Date date) {
 		for (DailyInfo dailyInfo : dailyInfos) {
-			if (dailyInfo.getDate().equals(date) && !dailyInfo.getEatenFoods().isEmpty())
+			if (dailyInfo.getDate().equals(date) && !dailyInfo.userFoodMgr.isEmpty())
 				return true;
 		}
 		return false;
@@ -180,16 +180,6 @@ public class User implements Manageable, UIData {
 		return buf;
 	}
 
-	String toStringDetail() {
-		String buf = "===기본정보===\n이름 : " + name + "\n키 : " + height + "\n몸무게 : " + weight + "\n성별 : " + gender
-				+ "\n목표 몸무게 : " + goal + "\n";
-		for (DailyInfo dailyResult : dailyInfos) {
-			buf += dailyResult.toStringDetail();
-		}
-
-		return buf;
-	}
-
 	DailyInfo getCurrentDailyInfo() { // 가장 최근 일과 반환
 		int size = dailyInfos.size();
 		return dailyInfos.get(size - 1);
@@ -203,7 +193,7 @@ public class User implements Manageable, UIData {
 		String buf = "";
 		ArrayList<UserFood> userFoods;
 		for (DailyInfo dailyInfo : dailyInfos) {
-			userFoods = dailyInfo.getEatenFoods();
+			userFoods = dailyInfo.userFoodMgr;
 			buf += name + " " + dailyInfo.getDate().toString() + " " + userFoods.size() + "\n";
 			for (UserFood userFood : userFoods) {
 				buf += userFood.food.name + " " + userFood.size + "\n";
@@ -227,4 +217,5 @@ public class User implements Manageable, UIData {
 
 		return buf;
 	}
+
 }

@@ -1,6 +1,7 @@
 package health;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.Scanner;
 
 import mgr.Factory;
@@ -26,9 +27,9 @@ public class Health {
 				for (UserExercise userExercise : dailyInfo.userExerciseMgr) {
 					System.out.println(userExercise);
 				}
-//				for (UserFood userFood : dailyInfo.userFoodMgr) {
-//					System.out.println(userExercise);
-//				}
+				for (UserFood userFood : dailyInfo.userFoodMgr) {
+					System.out.println(userFood);
+				}
 			}
 		}
 	}
@@ -85,7 +86,7 @@ public class Health {
 					String foodName = parts[0];
 					int foodsize = Integer.parseInt(parts[1]);
 					Food food = (Food) FoodMgr.getInstance().find(foodName);
-					user.findDaily(date).addFoodEaten(new UserFood(food, foodsize));
+					user.findDaily(date).userFoodMgr.add(new UserFood(food, foodsize, date));
 				}
 			}
 		} catch (Exception e) {
@@ -121,6 +122,7 @@ public class Health {
 					int duration = Integer.parseInt(parts[1]);
 					Exercise exercise = (Exercise) ExerciseMgr.getInstance().find(exerciseName);
 					user.findDaily(date).userExerciseMgr.add(new UserExercise(exercise, user.weight, duration, date));
+					Collections.sort(user.dailyInfos);
 				}
 			}
 		} catch (Exception e) {

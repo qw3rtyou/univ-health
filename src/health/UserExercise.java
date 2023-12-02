@@ -45,8 +45,8 @@ public class UserExercise implements Manageable, UIData {
 
 	@Override
 	public String[] getUiTexts() {
-		String[] texts = new String[4];
-		texts[0] = date;
+		String[] texts = new String[5];
+		texts[0] = date.toString();
 		texts[1] = exercise.name;
 		texts[2] = "" + duration;
 		texts[3] = "" + caloriesBurned;

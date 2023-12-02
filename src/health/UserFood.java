@@ -5,15 +5,18 @@ import java.util.Scanner;
 import facade.UIData;
 import mgr.Manageable;
 
-public class UserFood implements Manageable, UIData{
+public class UserFood implements Manageable, UIData {
 	int size;
 	int cal;
 	Food food;
 
-	public UserFood(Food food, int size) {
+	String date;
+
+	public UserFood(Food food, int size, Date date) {
 		this.food = food;
 		this.size = size;
 		this.cal = (int) (food.getCalRatio() * size);
+		this.date = date.toString();
 	}
 
 	@Override
@@ -40,10 +43,11 @@ public class UserFood implements Manageable, UIData{
 
 	@Override
 	public String[] getUiTexts() {
-		String[] texts = new String[3];
-		texts[0] = food.name;
-		texts[1] = ""+cal;
-		texts[2] = ""+size;
+		String[] texts = new String[4];
+		texts[0] = date.toString();
+		texts[1] = food.name;
+		texts[2] = "" + cal;
+		texts[3] = "" + size;
 		return texts;
 	}
 }

@@ -9,7 +9,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import health.DailyInfo;
 import health.User;
+import health.UserExercise;
+import health.UserExerciseMgr;
+import health.UserFood;
 import health.UserFoodMgr;
 import health.UserMgr;
 
@@ -32,17 +36,47 @@ public class DetailDialog extends javax.swing.JDialog {
 		User user = UserMgr.getInstance().find(userDetails[0]);
 
 		JTabbedPane jtab = new JTabbedPane();
+		UserExerciseMgr tmpExerciseMgr = new UserExerciseMgr();
+		UserFoodMgr tmpUserFoodMgr = new UserFoodMgr();
+
+		for (DailyInfo dailyInfo : user.dailyInfos) {
+			for (UserExercise userExercise : dailyInfo.userExerciseMgr) {
+				tmpExerciseMgr.add(userExercise);
+			}
+			for (UserFood userfood : dailyInfo.userFoodMgr) {
+				tmpUserFoodMgr.add(userfood);
+			}
+		}
+		
 		userExercisePane = new JPanel(new BorderLayout());
 		userExerciseTable.tableTitle = "userexercise";
-		userExerciseTable.addComponentsToPane(user.dailyInfos.get(1).userExerciseMgr);
+		userExerciseTable.addComponentsToPane(tmpExerciseMgr);
 		userExercisePane.add(userExerciseTable, BorderLayout.CENTER);
 		jtab.add("운동정보", userExercisePane);
 
 		userFoodPane = new JPanel(new BorderLayout());
 		userFoodTable.tableTitle = "userfood";
-		userFoodTable.addComponentsToPane(new UserFoodMgr());
+		userFoodTable.addComponentsToPane(tmpUserFoodMgr);
 		userFoodPane.add(userFoodTable, BorderLayout.CENTER);
 		jtab.add("음식정보", userFoodPane);
+
+//		for (DailyInfo dailyInfo : user.dailyInfos) {
+//		    JPanel userExercisePane = new JPanel(new BorderLayout());
+//		    TableSelectionDemo userExerciseTable = new TableSelectionDemo();
+//		    userExerciseTable.tableTitle = "userexercise";
+//		    userExerciseTable.addComponentsToPane(dailyInfo.userExerciseMgr);
+//		    userExercisePane.add(userExerciseTable, BorderLayout.CENTER);
+//		    jtab.add("운동정보: "+dailyInfo.getDate() ,userExercisePane);
+//		}
+//		
+//		for (DailyInfo dailyInfo : user.dailyInfos) {
+//		    JPanel userFoodPane = new JPanel(new BorderLayout());
+//		    TableSelectionDemo userFoodTable = new TableSelectionDemo();
+//		    userFoodTable.tableTitle = "userfood";
+//		    userFoodTable.addComponentsToPane(dailyInfo.userFoodMgr);
+//		    userFoodPane.add(userFoodTable, BorderLayout.CENTER);
+//		    jtab.add("음식정보: "+dailyInfo.getDate() ,userFoodPane);
+//		}
 
 		setTitle("유저정보");
 		JPanel pane = new JPanel(new BorderLayout());
