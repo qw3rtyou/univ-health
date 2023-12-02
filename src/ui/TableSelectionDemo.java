@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 import facade.IDataEngine;
 import facade.UIData;
+import health.User;
 
 public class TableSelectionDemo extends JPanel implements ListSelectionListener {
 
@@ -73,14 +74,14 @@ public class TableSelectionDemo extends JPanel implements ListSelectionListener 
 		String[] rowTexts = new String[tableModel.getColumnCount()];
 		for (int i = 0; i < rowTexts.length; i++)
 			rowTexts[i] = (String)tableModel.getValueAt(selectedIndex, i);
-		DetailDialog dlg = new DetailDialog(rowTexts);
+		UserDetailDialog dlg = new UserDetailDialog(rowTexts);
 		dlg.setup();
 		dlg.pack();
 		dlg.setVisible(true);
 	}
 	
 	void addFood() {
-		AddFoodPanel afp = new AddFoodPanel();
+		AddFoodDialog afp = new AddFoodDialog();
 		afp.setup();
 		afp.pack();
 		afp.setLocationRelativeTo(null);
@@ -88,7 +89,7 @@ public class TableSelectionDemo extends JPanel implements ListSelectionListener 
 	}
 	
 	void addUser() {
-		AddUserInfo aui = new AddUserInfo();
+		AddUserDialog aui = new AddUserDialog();
 		aui.setup();
 		aui.pack();
 		aui.setLocationRelativeTo(null);
@@ -96,6 +97,22 @@ public class TableSelectionDemo extends JPanel implements ListSelectionListener 
 	}
 	
 	void addExercise() {}
+	
+	void addUserFood(User user) {
+		AddUserFoodDialog afp = new AddUserFoodDialog(user);
+		afp.setup();
+		afp.pack();
+		afp.setLocationRelativeTo(null);
+		afp.setVisible(true);
+	}
+	
+	void addUserExercise(User user) {
+		AddUserExerciseDialog afp = new AddUserExerciseDialog(user);
+		afp.setup();
+		afp.pack();
+		afp.setLocationRelativeTo(null);
+		afp.setVisible(true);
+	}
 	
 	@Override
 	public void valueChanged(ListSelectionEvent e) {

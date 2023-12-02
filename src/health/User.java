@@ -8,11 +8,11 @@ import mgr.Manageable;
 
 public class User implements Manageable, UIData {
 
-	String name;
-	double height;
-	double weight;
-	String gender;
-	int goal;
+	public String name;
+	public double height;
+	public double weight;
+	public String gender;
+	public int goal;
 	public ArrayList<DailyInfo> dailyInfos = new ArrayList<>();
 
 	public User(String name, double height, double weight, String gender, int goal) {
@@ -71,7 +71,7 @@ public class User implements Manageable, UIData {
 		return false;
 	}
 
-	DailyInfo findDaily(Date date) {
+	public DailyInfo findDaily(Date date) {
 		for (DailyInfo dailyInfo : dailyInfos) {
 			if (dailyInfo.getDate().equals(date))
 				return dailyInfo;
@@ -146,7 +146,7 @@ public class User implements Manageable, UIData {
 //		return "추천 부위 : " + leastUsedPart;
 //	}
 
-	Boolean isDailyExist(Date date) {
+	public Boolean isDailyExist(Date date) {
 		for (DailyInfo dailyInfo : dailyInfos) {
 			if (dailyInfo.getDate().equals(date))
 				return true;
@@ -154,7 +154,7 @@ public class User implements Manageable, UIData {
 		return false;
 	}
 
-	Boolean isDailyFoodExist(Date date) {
+	public Boolean isDailyFoodExist(Date date) {
 		for (DailyInfo dailyInfo : dailyInfos) {
 			if (dailyInfo.getDate().equals(date) && !dailyInfo.userFoodMgr.isEmpty())
 				return true;
@@ -162,7 +162,7 @@ public class User implements Manageable, UIData {
 		return false;
 	}
 
-	Boolean isDailyExerciseExist(Date date) {
+	public Boolean isDailyExerciseExist(Date date) {
 		for (DailyInfo dailyInfo : dailyInfos) {
 			if (dailyInfo.getDate().equals(date) && !dailyInfo.userExerciseMgr.isEmpty())
 				return true;
@@ -180,7 +180,7 @@ public class User implements Manageable, UIData {
 		return buf;
 	}
 
-	DailyInfo getCurrentDailyInfo() { // 가장 최근 일과 반환
+	public DailyInfo getCurrentDailyInfo() { // 가장 최근 일과 반환
 		int size = dailyInfos.size();
 		return dailyInfos.get(size - 1);
 	}

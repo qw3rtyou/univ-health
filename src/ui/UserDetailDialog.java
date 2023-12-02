@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -17,7 +20,7 @@ import health.UserFood;
 import health.UserFoodMgr;
 import health.UserMgr;
 
-public class DetailDialog extends javax.swing.JDialog {
+public class UserDetailDialog extends javax.swing.JDialog {
 	private static final long serialVersionUID = 1L;
 	String[] userDetails;
 	JLabel details[] = new JLabel[5];
@@ -26,11 +29,25 @@ public class DetailDialog extends javax.swing.JDialog {
 	TableSelectionDemo userFoodTable = new TableSelectionDemo();
 	JPanel userExercisePane;
 	TableSelectionDemo userExerciseTable = new TableSelectionDemo();
+	UserFoodTopPanel userFoodTopPanel;
 
-	DetailDialog(String[] texts) {
+	UserDetailDialog(String[] texts) {
 		super(GUIMain.frame);
 		userDetails = texts;
 	}
+
+//	private JPanel foodPane;
+//	TableSelectionDemo foodTable = new TableSelectionDemo();
+//	FoodTopPanel foodTop = new FoodTopPanel();
+//
+//	private void setupFoodPane() {
+//		foodPane = new JPanel(new BorderLayout());
+//		foodTable.tableTitle = "food";
+//		foodTable.addComponentsToPane(FoodMgr.getInstance());
+//		foodTop.setupTopPane(foodTable);
+//		foodPane.add(foodTop, BorderLayout.NORTH);
+//		foodPane.add(foodTable, BorderLayout.CENTER);
+//	}
 
 	void setup() {
 		User user = UserMgr.getInstance().find(userDetails[0]);
@@ -47,7 +64,7 @@ public class DetailDialog extends javax.swing.JDialog {
 				tmpUserFoodMgr.add(userfood);
 			}
 		}
-		
+
 		userExercisePane = new JPanel(new BorderLayout());
 		userExerciseTable.tableTitle = "userexercise";
 		userExerciseTable.addComponentsToPane(tmpExerciseMgr);
@@ -59,25 +76,32 @@ public class DetailDialog extends javax.swing.JDialog {
 		userFoodTable.addComponentsToPane(tmpUserFoodMgr);
 		userFoodPane.add(userFoodTable, BorderLayout.CENTER);
 		jtab.add("음식정보", userFoodPane);
+		
 
-//		for (DailyInfo dailyInfo : user.dailyInfos) {
-//		    JPanel userExercisePane = new JPanel(new BorderLayout());
-//		    TableSelectionDemo userExerciseTable = new TableSelectionDemo();
-//		    userExerciseTable.tableTitle = "userexercise";
-//		    userExerciseTable.addComponentsToPane(dailyInfo.userExerciseMgr);
-//		    userExercisePane.add(userExerciseTable, BorderLayout.CENTER);
-//		    jtab.add("운동정보: "+dailyInfo.getDate() ,userExercisePane);
-//		}
-//		
-//		for (DailyInfo dailyInfo : user.dailyInfos) {
-//		    JPanel userFoodPane = new JPanel(new BorderLayout());
-//		    TableSelectionDemo userFoodTable = new TableSelectionDemo();
-//		    userFoodTable.tableTitle = "userfood";
-//		    userFoodTable.addComponentsToPane(dailyInfo.userFoodMgr);
-//		    userFoodPane.add(userFoodTable, BorderLayout.CENTER);
-//		    jtab.add("음식정보: "+dailyInfo.getDate() ,userFoodPane);
-//		}
+		JPanel BottomPane = new JPanel();
 
+		JButton addFoodButton = new JButton("음식추가");
+		BottomPane.add(addFoodButton, BorderLayout.EAST);
+
+		addFoodButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getActionCommand().equals("음식추가")) {
+					userFoodTable.addUserFood(user);
+				}
+			}
+		});
+
+		JButton addExerciseButton = new JButton("운동추가");
+		BottomPane.add(addExerciseButton, BorderLayout.WEST);
+
+		addExerciseButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getActionCommand().equals("운동추가")) {
+					userExerciseTable.addUserExercise(user);
+				}
+			}
+		});
+		
 		setTitle("유저정보");
 		JPanel pane = new JPanel(new BorderLayout());
 		JPanel lpane = new JPanel(new GridLayout(5, 1));
@@ -95,10 +119,11 @@ public class DetailDialog extends javax.swing.JDialog {
 		lpane.add(details[2]);
 		lpane.add(details[3]);
 		lpane.add(details[4]);
+		
+		pane.add(BottomPane, BorderLayout.SOUTH);
 		pane.add(lpane, BorderLayout.CENTER);
 		pane.add(photo, BorderLayout.LINE_END);
-
-		pane.add(jtab, BorderLayout.NORTH); // JTabbedPane를 pane에 추가
+		pane.add(jtab, BorderLayout.NORTH);
 
 		this.setMinimumSize(new Dimension(400, 150));
 		setContentPane(pane);

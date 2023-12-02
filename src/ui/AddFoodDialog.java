@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 import health.Food;
 import health.FoodMgr;
 
-public class AddFoodPanel extends javax.swing.JDialog {
+public class AddFoodDialog extends javax.swing.JDialog {
 	private static final long serialVersionUID = 1L;
 	JTextField nameField;
 	JTextField carbField;

@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 import health.User;
 import health.UserMgr;
 
-public class AddUserInfo extends javax.swing.JDialog {
+public class AddUserDialog extends javax.swing.JDialog {
 	private static final long serialVersionUID = 1L;
 	JTextField nameField;
 	JTextField heightField;
