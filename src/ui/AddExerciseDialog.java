@@ -17,7 +17,7 @@ public class AddExerciseDialog extends javax.swing.JDialog {
 	JTextField typeField;
 	JTextField metsField;
 	JTextField partField;
-	JButton addFoodButton;
+	JButton addExerciseButton;
 
 	public void setup() {
 
@@ -28,7 +28,7 @@ public class AddExerciseDialog extends javax.swing.JDialog {
 		typeField = new JTextField();
 		metsField = new JTextField();
 		partField = new JTextField();
-		addFoodButton = new JButton("운동 추가");
+		addExerciseButton = new JButton("운동 추가");
 
 		add(new JLabel("이름:"));
 		add(nameField);
@@ -38,9 +38,9 @@ public class AddExerciseDialog extends javax.swing.JDialog {
 		add(metsField);
 		add(new JLabel("부위"));
 		add(partField);
-		add(addFoodButton);
+		add(addExerciseButton);
 
-		addFoodButton.addActionListener(new ActionListener() {
+		addExerciseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String name = nameField.getText();
 				String type = typeField.getText();

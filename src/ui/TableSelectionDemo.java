@@ -94,16 +94,16 @@ public class TableSelectionDemo extends JPanel implements ListSelectionListener 
 		afp.setVisible(true);
 	}
 
-	void addUser() {
-		AddUserDialog aui = new AddUserDialog();
+	void addExercise() {
+		AddExerciseDialog aui = new AddExerciseDialog();
 		aui.setup();
 		aui.pack();
 		aui.setLocationRelativeTo(null);
 		aui.setVisible(true);
 	}
 
-	void addExercise() {
-		AddExerciseDialog aui = new AddExerciseDialog();
+	void addUser() {
+		AddUserDialog aui = new AddUserDialog();
 		aui.setup();
 		aui.pack();
 		aui.setLocationRelativeTo(null);

@@ -59,6 +59,7 @@ public class AddUserExerciseDialog extends javax.swing.JDialog {
 					user.findDaily(date).userExerciseMgr.add(userExercise);
 				else {
 					DailyInfo dailyInfo = new DailyInfo(date);
+					dailyInfo.addExerciseDone(userExercise);
 					user.dailyInfos.add(dailyInfo);
 				}
 

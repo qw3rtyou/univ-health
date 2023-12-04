@@ -60,7 +60,9 @@ public class AddUserFoodDialog extends javax.swing.JDialog {
 					user.findDaily(date).userFoodMgr.add(userFood);
 				else {
 					DailyInfo dailyInfo = new DailyInfo(date);
+					dailyInfo.addFoodEaten(userFood);
 					user.dailyInfos.add(dailyInfo);
+				
 				}
 				
 				dispose();
