@@ -120,7 +120,6 @@ public class TableSelectionDemo extends JPanel implements ListSelectionListener 
 
 	void addUserExercise(User user) {
 		AddUserExerciseDialog afp = new AddUserExerciseDialog(user);
-		afp.setup();
 		afp.pack();
 		afp.setLocationRelativeTo(null);
 		afp.setVisible(true);

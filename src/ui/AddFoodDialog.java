@@ -11,6 +11,10 @@ import javax.swing.JTextField;
 import health.Food;
 import health.FoodMgr;
 
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
+
 public class AddFoodDialog extends javax.swing.JDialog {
 	private static final long serialVersionUID = 1L;
 	JTextField nameField;
@@ -20,6 +24,7 @@ public class AddFoodDialog extends javax.swing.JDialog {
 	JButton addFoodButton;
 
 	public void setup() {
+
 
 		setTitle("음식추가");
 		setLayout(new GridLayout(5, 2));

@@ -16,9 +16,15 @@ public class Exercise implements Manageable, UIData {
 	public Exercise() {
 	}
 
-	public Exercise(String name, String type, Double mets, String part) {
-		this.name = name;
+
+	public String getType() {
+		return type;
+	}
+
+	public Exercise(String type, String name, Double mets, String part) {
+
 		this.type = type;
+		this.name = name;
 		this.mets = mets;
 		this.part = part;
 	}
@@ -74,6 +80,9 @@ public class Exercise implements Manageable, UIData {
 		texts[2] = "" + mets;
 		texts[3] = part;
 		return texts;
+	}
+	public String getName() {
+		return name;
 	}
 
 	public String toStringforFile() {

@@ -23,7 +23,7 @@ public class UserExercise implements Manageable, UIData {
 
 	@Override
 	public String toString() {
-		return exercise.toString() + "운동시간 : " + duration + "\n총 칼로리 소모 : " + caloriesBurned + "\n";
+		return exercise.toString() + "운동시간(분) : " + duration + "\n총 칼로리 소모 : " + caloriesBurned + "\n";
 	}
 
 	@Override
@@ -48,8 +48,9 @@ public class UserExercise implements Manageable, UIData {
 		String[] texts = new String[5];
 		texts[0] = date.toString();
 		texts[1] = exercise.name;
-		texts[2] = "" + duration;
-		texts[3] = "" + caloriesBurned;
+		texts[2] = "" + weight;
+		texts[3] = "" + duration;
+		texts[4] = "" + caloriesBurned;
 		return texts;
 	}
 }

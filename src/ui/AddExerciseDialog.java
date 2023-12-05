@@ -54,4 +54,6 @@ public class AddExerciseDialog extends javax.swing.JDialog {
 		});
 	}
 
+
+
 }

@@ -4,8 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Properties;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -16,11 +18,15 @@ import health.FoodMgr;
 import health.User;
 import health.UserFood;
 import health.UserMgr;
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 public class AddUserFoodDialog extends javax.swing.JDialog {
+	JDatePickerImpl datePicker;
 	private static final long serialVersionUID = 1L;
 	JTextField dateField;
-	JTextField nameField;
+	JComboBox<String> nameBox;
 	JTextField sizeField;
 	JButton addFoodButton;
 	User user;
@@ -30,29 +36,39 @@ public class AddUserFoodDialog extends javax.swing.JDialog {
 	}
 
 	public void setup() {
+		UtilDateModel model = new UtilDateModel();
+		Properties p = new Properties();
+		p.put ("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model);
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 
 		setTitle("음식추가");
-		setLayout(new GridLayout(6, 2));
+		setLayout(new GridLayout(7, 2));
 
 		dateField = new JTextField();
-		nameField = new JTextField();
+		nameBox = new JComboBox<>();
+		for (Food food : FoodMgr.getInstance().getFoods()) {
+			nameBox.addItem(food.getName());
+		}
 		sizeField = new JTextField();
 
 		addFoodButton = new JButton("음식 추가");
 
 		add(new JLabel("날짜"));
-		add(dateField);
+		add(datePicker);
 		add(new JLabel("음식이름"));
-		add(nameField);
+		add(nameBox);
 		add(new JLabel("먹은 양(g)"));
 		add(sizeField);
 		add(addFoodButton,BorderLayout.SOUTH);
 
 		addFoodButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String[] tmp = dateField.getText().split(" ");
-				Date date = new Date(Integer.parseInt(tmp[0]), Integer.parseInt(tmp[1]), Integer.parseInt(tmp[2]));
-				Food food = FoodMgr.getInstance().find(nameField.getText());
+				java.util.Date selectedDate = (java.util.Date) datePicker.getModel().getValue();
+				Date date = new Date(selectedDate.getYear()+1900, selectedDate.getMonth()+1, selectedDate.getDate());
+				Food food = FoodMgr.getInstance().find((String) nameBox.getSelectedItem());
 				double size = Double.parseDouble(sizeField.getText());
 
 				UserFood userFood = new UserFood(food, (int) size, date);
@@ -69,5 +85,4 @@ public class AddUserFoodDialog extends javax.swing.JDialog {
 			}
 		});
 	}
-
 }

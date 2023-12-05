@@ -9,7 +9,7 @@ public class UserExerciseMgr extends DataEngineImplExerciseList<UserExercise> {
 		setLabels(headers);
 	}
 
-	private String headers[] = { "운동 날짜","운동명", "중량", "시간", "칼로리 소모", };
+	private String headers[] = { "운동 날짜","운동명", "몸무게", "시간(분)", "칼로리 소모", };
 
 	@Override
 	public void addElement(UserExercise a) {

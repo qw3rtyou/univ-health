@@ -46,8 +46,8 @@ public class UserFood implements Manageable, UIData {
 		String[] texts = new String[4];
 		texts[0] = date.toString();
 		texts[1] = food.name;
-		texts[2] = "" + cal;
-		texts[3] = "" + size;
+		texts[2] = "" + size; // 순서 변경 size, cal
+		texts[3] = "" + cal;
 		return texts;
 	}
 }

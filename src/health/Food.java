@@ -18,7 +18,9 @@ public class Food implements Manageable, UIData {
 		this.proteinRatio = proteinRatio;
 		this.fatRatio = fatRatio;
 	}
-
+	public String getName() {
+		return name;
+	}
 	public Food() {
 	}
 
