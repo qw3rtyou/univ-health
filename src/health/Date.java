@@ -22,4 +22,8 @@ public class Date implements Comparable<Date> {
 	public String toString() {
 		return "" + year + "/" + month + "/" + day;
 	}
+	
+	public String toFileString() {
+		return "" + year + " " + month + " " + day;
+	}
 }

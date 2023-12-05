@@ -12,11 +12,12 @@ import mgr.Manageable;
 import ui.GUIMain;
 
 public class Health {
-	final static String FILE_PATH_USER = "data/user_data.txt";
-	final static String FILE_PATH_FOOD = "data/food_data.txt";
-	final static String FILE_PATH_EXERCISE = "data/exercise_data.txt";
-	final static String FILE_PATH_USERFOOD = "data/user_food_data.txt";
-	final static String FILE_PATH_USEREXERCISE = "data/user_exercise_data.txt";
+	final static String DATA_DIRECTORY = "data/";
+	final static String FILE_PATH_USER = DATA_DIRECTORY + "user_data.txt";
+	final static String FILE_PATH_FOOD = DATA_DIRECTORY + "food_data.txt";
+	final static String FILE_PATH_EXERCISE = DATA_DIRECTORY + "exercise_data.txt";
+	final static String FILE_PATH_USERFOOD = DATA_DIRECTORY + "user_food_data.txt";
+	final static String FILE_PATH_USEREXERCISE = DATA_DIRECTORY + "user_exercise_data.txt";
 
 	private static Health health = null;
 
@@ -84,7 +85,7 @@ public class Health {
 	public static void main(String[] args) {
 		Health health = new Health();
 		health.run();
-		health.test(); // 삭제!!!!
+		health.saveCurrentState();
 		GUIMain.startGUI();
 	}
 
@@ -157,7 +158,7 @@ public class Health {
 		}
 	}
 
-	void saveCurrentState() {
+	public void saveCurrentState() {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH_USER))) {
 			for (Manageable user : UserMgr.getInstance().mList) {
 				writer.write(((User) user).toStringforUserFile());
