@@ -27,9 +27,52 @@ public class User implements Manageable, UIData {
 	public User() {
 	}
 
+	public String getName() {
+		return this.name;
+	}
+
+	public double getHeight() {
+		return this.height;
+	}
+
+	public double getWeight() {
+		return this.weight;
+	}
+
+	public String getGender() {
+		return this.gender;
+	}
+
+	public int getTargetWeight() {
+		return this.goal;
+	}
+
 	@Override
 	public void set(Object[] uitexts) {
-		// TODO Auto-generated method stub
+		this.name = (String)uitexts[0];
+		this.height = Double.parseDouble((String)uitexts[1]);
+		this.gender = (String)uitexts[2];
+		this.weight = Double.parseDouble((String)uitexts[3]);
+		this.goal = Integer.parseInt((String)uitexts[4]);
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setHeight(double height) {
+		this.height = height;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public void setTargetWeight(double parseDouble) {
+		this.goal = (int) parseDouble;
 	}
 
 	@Override
@@ -229,4 +272,7 @@ public class User implements Manageable, UIData {
 	public String getProfileImagePath() {
 		return profileImagePath;
 	}
+
+
+
 }

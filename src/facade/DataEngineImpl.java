@@ -29,9 +29,12 @@ public abstract class DataEngineImpl<T extends Manageable> extends Manager<T>
 	}
 	@Override
 	public void update(String[] editTexts) {
-		// TODO Auto-generated method stub
-		Manageable s = find(editTexts[0]);
-		((UIData)s).set(editTexts);
+		for (T item : mList) {
+			if (item.getName().equals(editTexts[0])) {
+				((UIData)item).set(editTexts);
+				break;
+			}
+		}
 	}
 	@Override
 	public void remove(String kwd) {

@@ -37,19 +37,6 @@ public class UserDetailDialog extends javax.swing.JDialog {
 		userDetails = texts;
 	}
 
-//	private JPanel foodPane;
-//	TableSelectionDemo foodTable = new TableSelectionDemo();
-//	FoodTopPanel foodTop = new FoodTopPanel();
-//
-//	private void setupFoodPane() {
-//		foodPane = new JPanel(new BorderLayout());
-//		foodTable.tableTitle = "food";
-//		foodTable.addComponentsToPane(FoodMgr.getInstance());
-//		foodTop.setupTopPane(foodTable);
-//		foodPane.add(foodTop, BorderLayout.NORTH);
-//		foodPane.add(foodTable, BorderLayout.CENTER);
-//	}
-
 	void setup() {
 		User user = UserMgr.getInstance().find(userDetails[0]);
 
@@ -77,7 +64,7 @@ public class UserDetailDialog extends javax.swing.JDialog {
 		userFoodTable.addComponentsToPane(tmpUserFoodMgr);
 		userFoodPane.add(userFoodTable, BorderLayout.CENTER);
 		jtab.add("음식정보", userFoodPane);
-		
+
 
 		JPanel BottomPane = new JPanel();
 
@@ -114,11 +101,10 @@ public class UserDetailDialog extends javax.swing.JDialog {
 		} else {
 			photo.setText("                              No Image");
 		}
-		
+
 		setTitle("유저정보");
 		JPanel pane = new JPanel(new BorderLayout());
 		JPanel lpane = new JPanel(new GridLayout(5, 1));
-
 
 		details[0] = new JLabel("이름: " + userDetails[0]);
 		details[1] = new JLabel("키: " + userDetails[1]);
@@ -130,7 +116,7 @@ public class UserDetailDialog extends javax.swing.JDialog {
 		lpane.add(details[2]);
 		lpane.add(details[3]);
 		lpane.add(details[4]);
-		
+
 		pane.add(BottomPane, BorderLayout.SOUTH);
 		pane.add(lpane, BorderLayout.CENTER);
 		pane.add(photo, BorderLayout.LINE_END);
@@ -139,5 +125,28 @@ public class UserDetailDialog extends javax.swing.JDialog {
 		this.setMinimumSize(new Dimension(400, 150));
 		setContentPane(pane);
 		setLocationRelativeTo(pane);
+
+		JButton editButton = new JButton("수정하기");
+		BottomPane.add(editButton, BorderLayout.EAST);
+		editButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UserEditDialog userEditDialog = new UserEditDialog(user);
+				userEditDialog.pack();
+				userEditDialog.setVisible(true);
+
+				userDetails[0] = user.getName();
+				userDetails[1] = String.valueOf(user.getHeight());
+				userDetails[2] = user.getGender();
+				userDetails[3] = String.valueOf(user.getWeight());
+				userDetails[4] = String.valueOf(user.getTargetWeight());
+				details[0].setText("이름: " + userDetails[0]);
+				details[1].setText("키: " + userDetails[1]);
+				details[2].setText("성별: " + userDetails[2]);
+				details[3].setText("몸무게: " + userDetails[3]);
+				details[4].setText("목표체중: " + userDetails[4]);
+
+				UserMgr.getInstance().updateUser(user);
+			}
+		});
 	}
 }

@@ -53,4 +53,8 @@ public class UserExercise implements Manageable, UIData {
 		texts[4] = "" + caloriesBurned;
 		return texts;
 	}
+
+	public String getName() {
+		return this.exercise.name;
+	}
 }

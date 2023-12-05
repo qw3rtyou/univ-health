@@ -22,5 +22,12 @@ public class UserMgr extends DataEngineImpl<User> {
 		mList.add(u);
 		System.out.println("add : " + u);
 	}
-	
+	public void updateUser(User user) {
+		for (int i = 0; i < mList.size(); i++) {
+			if (mList.get(i).getName().equals(user.getName())) {
+				mList.set(i, user);
+				break;
+			}
+		}
+	}
 }

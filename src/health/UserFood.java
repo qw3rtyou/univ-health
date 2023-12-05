@@ -40,7 +40,6 @@ public class UserFood implements Manageable, UIData {
 	@Override
 	public void set(Object[] uitexts) {
 	}
-
 	@Override
 	public String[] getUiTexts() {
 		String[] texts = new String[4];
@@ -49,5 +48,9 @@ public class UserFood implements Manageable, UIData {
 		texts[2] = "" + size; // 순서 변경 size, cal
 		texts[3] = "" + cal;
 		return texts;
+	}
+
+	public String getName() {
+		return this.food.name;
 	}
 }
