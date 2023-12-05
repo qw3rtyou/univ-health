@@ -24,7 +24,7 @@ public class Health {
 	private Health() {
 	}
 
-	public Health getInstance() {
+	public static Health getInstance() {
 		if (health == null)
 			health = new Health();
 		return health;
@@ -84,8 +84,8 @@ public class Health {
 
 	public static void main(String[] args) {
 		Health health = new Health();
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> health.saveCurrentState()));
 		health.run();
-		health.saveCurrentState();
 		GUIMain.startGUI();
 	}
 

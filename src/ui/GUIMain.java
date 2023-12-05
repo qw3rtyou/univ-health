@@ -1,6 +1,8 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,6 +12,7 @@ import health.AerobicExerciseMgr;
 import health.AnaerobicExerciseMgr;
 import health.ExerciseMgr;
 import health.FoodMgr;
+import health.Health;
 import health.UserMgr;
 
 public class GUIMain {
@@ -47,6 +50,11 @@ public class GUIMain {
 		frame.setLocationRelativeTo(jtab);
 		frame.setVisible(true);
 
+		frame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				Health.getInstance().saveCurrentState();
+			}
+		});
 	}
 
 	private JPanel userPane;
@@ -103,7 +111,7 @@ public class GUIMain {
 		TableSelectionDemo totalTable = new TableSelectionDemo();
 		JPanel totalPane = new JPanel(new BorderLayout());
 		totalTable.tableTitle = "total";
-		totalTable.addComponentsToPane(ExerciseMgr.getInstance());  // 이 부분은 유산소와 무산소 운동 데이터를 합친 결과를 가져오는 것으로 수정해야 합니다.
+		totalTable.addComponentsToPane(ExerciseMgr.getInstance()); // 이 부분은 유산소와 무산소 운동 데이터를 합친 결과를 가져오는 것으로 수정해야 합니다.
 		totalPane.add(totalTable, BorderLayout.CENTER);
 
 		exerciseTab.add("유산소", aerobicPane);

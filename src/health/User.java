@@ -194,6 +194,8 @@ public class User implements Manageable, UIData {
 		ArrayList<UserFood> userFoods;
 		for (DailyInfo dailyInfo : dailyInfos) {
 			userFoods = dailyInfo.userFoodMgr;
+			if (userFoods.size()==0) 
+				continue;
 			buf += name + " " + dailyInfo.getDate().toFileString() + " " + userFoods.size() + "\n";
 			for (UserFood userFood : userFoods) {
 				buf += userFood.food.name + " " + userFood.size + "\n";
@@ -208,6 +210,8 @@ public class User implements Manageable, UIData {
 		ArrayList<UserExercise> userExercises;
 		for (DailyInfo dailyInfo : dailyInfos) {
 			userExercises = dailyInfo.userExerciseMgr;
+			if (userExercises.size()==0) 
+				continue;
 			buf += name + " " + dailyInfo.getDate().toFileString() + " " + userExercises.size() + "\n";
 			for (UserExercise userExercise : userExercises) {
 				buf += userExercise.exercise.name + " " + userExercise.duration + "\n";
