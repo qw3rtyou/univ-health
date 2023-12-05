@@ -30,7 +30,7 @@ public class Health {
 		return health;
 	}
 
-	public void test() { // 삭제
+	public void test() { // 삭제 - 테스트용
 		for (User user : UserMgr.getInstance().mList) {
 			for (DailyInfo dailyInfo : user.dailyInfos) {
 				for (UserExercise userExercise : dailyInfo.userExerciseMgr) {
@@ -84,7 +84,7 @@ public class Health {
 
 	public static void main(String[] args) {
 		Health health = new Health();
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> health.saveCurrentState()));
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> health.saveCurrentState()));	//훅 등록
 		health.run();
 		GUIMain.startGUI();
 	}

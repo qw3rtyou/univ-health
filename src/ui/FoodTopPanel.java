@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class FoodTopPanel extends JPanel {
 
 	JTextField kwdTextField = new JTextField("검색어 입력", 20);

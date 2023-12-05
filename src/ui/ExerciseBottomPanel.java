@@ -35,7 +35,7 @@ public class ExerciseBottomPanel extends JPanel {
 
 		addExercise.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (e.getActionCommand().equals("운동 추가")) {
+				if (e.getActionCommand().equals("운동추가")) {
 					tableDemo.addExercise();
 				}
 			}

@@ -16,10 +16,6 @@ public class Exercise implements Manageable, UIData {
 	public Exercise() {
 	}
 
-	public String getType() {
-		return type;
-	}
-
 	public Exercise(String name, String type, Double mets, String part) {
 		this.name = name;
 		this.type = type;
@@ -54,8 +50,6 @@ public class Exercise implements Manageable, UIData {
 	@Override
 	public boolean matches(String kwd) {
 		// TODO Auto-generated method stub
-		if (kwd.length() == 0)
-			return true;
 		if (name.contains(kwd))
 			return true;
 		if (kwd.equals("무산소") && type.equals("무산소"))
