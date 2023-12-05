@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 
 public class FoodTopPanel extends JPanel {
 	
-	JTextField kwdTextField = new JTextField("", 20);
+	JTextField kwdTextField = new JTextField("검색어 입력", 20);
 	JTextField edit;
 	
 	void setupTopPane(TableSelectionDemo tableDemo) {

@@ -33,40 +33,38 @@ public class Health {
 	}
 
 	public void run() {
-		ExerciseMgr.getInstance().readAll("exercise_data.txt", new Factory<Exercise>() {
+		ExerciseMgr.getInstance().readAll("data/exercise_data.txt", new Factory<Exercise>() {
 			public Exercise create() {
 				return new Exercise();
 			}
 		});
-		FoodMgr.getInstance().readAll("food_data.txt", new Factory<Food>() {
+		FoodMgr.getInstance().readAll("data/food_data.txt", new Factory<Food>() {
 			public Food create() {
 				return new Food();
 			}
 		});
-		UserMgr.getInstance().readAll("user_data.txt", new Factory<User>() {
+		UserMgr.getInstance().readAll("data/user_data.txt", new Factory<User>() {
 			public User create() {
 				return new User();
 			}
 		});
-		loadDailyExerciseFromFile("user_exercise_data.txt");
-		loadDailyFoodFromFile("user_food_data.txt");
+		loadDailyExerciseFromFile("data/user_exercise_data.txt");
+		loadDailyFoodFromFile("data/user_food_data.txt");
 
-		AerobicExerciseMgr.getInstance().readAll("exercise_data.txt", new Factory<Exercise>() {
+		AerobicExerciseMgr.getInstance().readAll("data/exercise_data.txt", new Factory<Exercise>() {
 			public Exercise create() {
 				return new Exercise();
 			}
 		});
-		
 		for (Exercise exercise : AerobicExerciseMgr.getInstance().findAll("무산소")) {
 			AerobicExerciseMgr.getInstance().mList.remove(exercise);
 		}
 		
-		AnaerobicExerciseMgr.getInstance().readAll("exercise_data.txt", new Factory<Exercise>() {
+		AnaerobicExerciseMgr.getInstance().readAll("data/exercise_data.txt", new Factory<Exercise>() {
 			public Exercise create() {
 				return new Exercise();
 			}
 		});
-		
 		for (Exercise exercise : AnaerobicExerciseMgr.getInstance().findAll("유산소")) {
 			AnaerobicExerciseMgr.getInstance().mList.remove(exercise);
 		}

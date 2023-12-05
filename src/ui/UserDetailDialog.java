@@ -106,13 +106,13 @@ public class UserDetailDialog extends javax.swing.JDialog {
 		JLabel photo = new JLabel();
 		photo.setOpaque(true);
 		photo.setPreferredSize(new Dimension(250, 250));;
-		photo.setBackground(Color.yellow);
+		photo.setBackground(Color.gray);
 		String profileImagePath = user.getProfileImagePath();
 		if (profileImagePath != null) {
 			ImageIcon imageIcon = new ImageIcon(profileImagePath);
 			photo.setIcon(imageIcon);
 		} else {
-			photo.setText("No Image");
+			photo.setText("                              No Image");
 		}
 		
 		setTitle("유저정보");

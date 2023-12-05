@@ -14,9 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 import facade.IDataEngine;
 import facade.UIData;
-import health.Exercise;
 import health.User;
-import health.ExerciseMgr;
 
 public class TableSelectionDemo extends JPanel implements ListSelectionListener {
 

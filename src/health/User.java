@@ -15,6 +15,7 @@ public class User implements Manageable, UIData {
 	public int goal;
 	public ArrayList<DailyInfo> dailyInfos = new ArrayList<>();
 	private String profileImagePath;
+
 	public User(String name, double height, double weight, String gender, int goal) {
 		this.name = name;
 		this.height = height;
@@ -30,6 +31,7 @@ public class User implements Manageable, UIData {
 	public void set(Object[] uitexts) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public String[] getUiTexts() {
 		// TODO Auto-generated method stub
@@ -215,10 +217,12 @@ public class User implements Manageable, UIData {
 
 		return buf;
 	}
+
 	public void setProfileImagePath(String profileImagePath) {
 
 		this.profileImagePath = profileImagePath;
 	}
+
 	public String getProfileImagePath() {
 		return profileImagePath;
 	}
