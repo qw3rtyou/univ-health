@@ -106,21 +106,14 @@ public class GUIMain {
 		totalTable.addComponentsToPane(ExerciseMgr.getInstance());  // 이 부분은 유산소와 무산소 운동 데이터를 합친 결과를 가져오는 것으로 수정해야 합니다.
 		totalPane.add(totalTable, BorderLayout.CENTER);
 
-		exerciseTable.tableTitle = "exercise";
-		exerciseTable.addComponentsToPane(ExerciseMgr.getInstance());
-		exerciseBottom.setupBottomPane(exerciseTable);
-		exercisePane.add(exerciseBottom, BorderLayout.NORTH);
-		exercisePane.add(exerciseTable, BorderLayout.CENTER);
-
 		exerciseTab.add("유산소", aerobicPane);
 		exerciseTab.add("무산소", anaerobicPane);
-		exerciseTab.add("전체", totalPane);
 
 		exerciseTable.tableTitle = "exercise";
 		exerciseTable.addComponentsToPane(ExerciseMgr.getInstance());
 		exerciseBottom.setupBottomPane(exerciseTable);
 		exercisePane.add(exerciseBottom, BorderLayout.NORTH);
-		exercisePane.add(exerciseTab, BorderLayout.CENTER); // 이 부분을 수정했습니다.
+		exercisePane.add(exerciseTab, BorderLayout.CENTER);
 	}
 
 	public static void startGUI() {

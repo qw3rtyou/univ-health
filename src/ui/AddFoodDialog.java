@@ -49,7 +49,6 @@ public class AddFoodDialog extends javax.swing.JDialog {
 
 				Food food = new Food(name, carb, prot, fat);
 				FoodMgr.getInstance().addElement(food);
-
 				dispose();
 			}
 		});

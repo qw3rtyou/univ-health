@@ -1,13 +1,23 @@
 package health;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Scanner;
 
 import mgr.Factory;
+import mgr.Manageable;
 import ui.GUIMain;
 
 public class Health {
+	final static String FILE_PATH_USER = "data/user_data.txt";
+	final static String FILE_PATH_FOOD = "data/food_data.txt";
+	final static String FILE_PATH_EXERCISE = "data/exercise_data.txt";
+	final static String FILE_PATH_USERFOOD = "data/user_food_data.txt";
+	final static String FILE_PATH_USEREXERCISE = "data/user_exercise_data.txt";
+
 	private static Health health = null;
 
 	private Health() {
@@ -33,25 +43,25 @@ public class Health {
 	}
 
 	public void run() {
-		ExerciseMgr.getInstance().readAll("data/exercise_data.txt", new Factory<Exercise>() {
+		ExerciseMgr.getInstance().readAll(FILE_PATH_EXERCISE, new Factory<Exercise>() {
 			public Exercise create() {
 				return new Exercise();
 			}
 		});
-		FoodMgr.getInstance().readAll("data/food_data.txt", new Factory<Food>() {
+		FoodMgr.getInstance().readAll(FILE_PATH_FOOD, new Factory<Food>() {
 			public Food create() {
 				return new Food();
 			}
 		});
-		UserMgr.getInstance().readAll("data/user_data.txt", new Factory<User>() {
+		UserMgr.getInstance().readAll(FILE_PATH_USER, new Factory<User>() {
 			public User create() {
 				return new User();
 			}
 		});
-		loadDailyExerciseFromFile("data/user_exercise_data.txt");
-		loadDailyFoodFromFile("data/user_food_data.txt");
+		loadDailyExerciseFromFile(FILE_PATH_USEREXERCISE);
+		loadDailyFoodFromFile(FILE_PATH_USERFOOD);
 
-		AerobicExerciseMgr.getInstance().readAll("data/exercise_data.txt", new Factory<Exercise>() {
+		AerobicExerciseMgr.getInstance().readAll(FILE_PATH_EXERCISE, new Factory<Exercise>() {
 			public Exercise create() {
 				return new Exercise();
 			}
@@ -59,8 +69,8 @@ public class Health {
 		for (Exercise exercise : AerobicExerciseMgr.getInstance().findAll("무산소")) {
 			AerobicExerciseMgr.getInstance().mList.remove(exercise);
 		}
-		
-		AnaerobicExerciseMgr.getInstance().readAll("data/exercise_data.txt", new Factory<Exercise>() {
+
+		AnaerobicExerciseMgr.getInstance().readAll(FILE_PATH_EXERCISE, new Factory<Exercise>() {
 			public Exercise create() {
 				return new Exercise();
 			}
@@ -143,6 +153,33 @@ public class Health {
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	void saveCurrentState() {
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH_USER))) {
+			for (Manageable user : UserMgr.getInstance().mList) {
+				writer.write(((User) user).toStringforUserFile());
+				writer.newLine();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH_USERFOOD))) {
+			for (Manageable user : UserMgr.getInstance().mList) {
+				writer.write(((User) user).toStringforFoodFile());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH_USEREXERCISE))) {
+			for (Manageable user : UserMgr.getInstance().mList) {
+				writer.write(((User) user).toStringforExerciseFile());
+			}
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
