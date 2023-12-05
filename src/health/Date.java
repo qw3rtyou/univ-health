@@ -12,9 +12,6 @@ public class Date implements Comparable<Date> {
 		this.day = day;
 	}
 
-	public Date() {
-	}
-
 	@Override
 	public int compareTo(Date o) {
 		// TODO Auto-generated method stub

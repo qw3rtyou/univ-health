@@ -18,7 +18,7 @@ public class DailyInfo implements Comparable<DailyInfo> {
 		return sum;
 	}
 
-	int getDailyCalOuput() {
+	int getDailyCalOutput() {
 		int sum = 0;
 		for (UserExercise userExercise : userExerciseMgr) {
 			sum += userExercise.caloriesBurned;
@@ -33,13 +33,13 @@ public class DailyInfo implements Comparable<DailyInfo> {
 		this.date = date;
 	}
 
-	public void addFoodEaten(UserFood eatenFood) {
-		userFoodMgr.add(eatenFood);
-	}
+//	public void addFoodEaten(UserFood eatenFood) {
+//		userFoodMgr.add(eatenFood);
+//	}
 
-	public void addExerciseDone(UserExercise exercise) {
-		userExerciseMgr.add(exercise);
-	}
+//	public void addExerciseDone(UserExercise exercise) {
+//		userExerciseMgr.add(exercise);
+//	}
 
 	@Override
 	public int compareTo(DailyInfo other) {

@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.ImageIcon;
 
 import health.DailyInfo;
 import health.User;
@@ -101,14 +102,24 @@ public class UserDetailDialog extends javax.swing.JDialog {
 				}
 			}
 		});
+
+		JLabel photo = new JLabel();
+		photo.setOpaque(true);
+		photo.setPreferredSize(new Dimension(250, 250));;
+		photo.setBackground(Color.yellow);
+		String profileImagePath = user.getProfileImagePath();
+		if (profileImagePath != null) {
+			ImageIcon imageIcon = new ImageIcon(profileImagePath);
+			photo.setIcon(imageIcon);
+		} else {
+			photo.setText("No Image");
+		}
 		
 		setTitle("유저정보");
 		JPanel pane = new JPanel(new BorderLayout());
 		JPanel lpane = new JPanel(new GridLayout(5, 1));
-		JLabel photo = new JLabel("photo");
-		photo.setOpaque(true);
-		photo.setPreferredSize(new Dimension(150, 150));
-		photo.setBackground(Color.yellow);
+
+
 		details[0] = new JLabel("이름: " + userDetails[0]);
 		details[1] = new JLabel("키: " + userDetails[1]);
 		details[2] = new JLabel("성별: " + userDetails[2]);

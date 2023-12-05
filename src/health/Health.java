@@ -19,8 +19,6 @@ public class Health {
 		return health;
 	}
 
-	Scanner scan = new Scanner(System.in);
-
 	public void test() { // 삭제
 		for (User user : UserMgr.getInstance().mList) {
 			for (DailyInfo dailyInfo : user.dailyInfos) {
@@ -52,12 +50,33 @@ public class Health {
 		});
 		loadDailyExerciseFromFile("user_exercise_data.txt");
 		loadDailyFoodFromFile("user_food_data.txt");
+
+		AerobicExerciseMgr.getInstance().readAll("exercise_data.txt", new Factory<Exercise>() {
+			public Exercise create() {
+				return new Exercise();
+			}
+		});
+		
+		for (Exercise exercise : AerobicExerciseMgr.getInstance().findAll("무산소")) {
+			AerobicExerciseMgr.getInstance().mList.remove(exercise);
+		}
+		
+		AnaerobicExerciseMgr.getInstance().readAll("exercise_data.txt", new Factory<Exercise>() {
+			public Exercise create() {
+				return new Exercise();
+			}
+		});
+		
+		for (Exercise exercise : AnaerobicExerciseMgr.getInstance().findAll("유산소")) {
+			AnaerobicExerciseMgr.getInstance().mList.remove(exercise);
+		}
+
 	}
 
 	public static void main(String[] args) {
 		Health health = new Health();
 		health.run();
-		health.test(); // 삭제
+		health.test(); // 삭제!!!!
 		GUIMain.startGUI();
 	}
 

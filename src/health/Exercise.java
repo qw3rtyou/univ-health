@@ -11,8 +11,12 @@ public class Exercise implements Manageable, UIData {
 	String name;
 	Double mets;
 	String part;
-	
+
 	public Exercise() {
+	}
+
+	public String getType() {
+		return type;
 	}
 
 	public Exercise(String name, String type, Double mets, String part) {
@@ -53,11 +57,15 @@ public class Exercise implements Manageable, UIData {
 			return true;
 		if (name.contains(kwd))
 			return true;
+		if (kwd.equals("무산소") && type.equals("무산소"))
+			return true;
+		if (kwd.equals("유산소") && type.equals("유산소"))
+			return true;
 		return false;
 	}
 
 	@Override
-	public void set(Object[] uitexts) {
+	public void set(Object[] uiTexts) {
 		// TODO Auto-generated method stub
 
 	}

@@ -1,6 +1,6 @@
 package facade;
 
 public interface UIData {
-    void set(Object[] uitexts);
+    void set(Object[] uiTexts);
     String[] getUiTexts();
 }

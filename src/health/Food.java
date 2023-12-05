@@ -7,10 +7,6 @@ import mgr.Manageable;
 
 public class Food implements Manageable, UIData {
 
-	/*
-	 * Nutrition 클래스 없애고 탄,단,지를 Food 클래스에 바로 작성
-	 */
-
 	String name;
 	String carbRatio;
 	String proteinRatio;
@@ -27,7 +23,7 @@ public class Food implements Manageable, UIData {
 	}
 
 	@Override
-	public void set(Object[] uitexts) {
+	public void set(Object[] uiTexts) {
 		// TODO Auto-generated method stub
 
 	}

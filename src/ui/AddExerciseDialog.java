@@ -49,10 +49,6 @@ public class AddExerciseDialog extends javax.swing.JDialog {
 
 				Exercise exercise = new Exercise(name, type, mets, part);
 				ExerciseMgr.getInstance().addElement(exercise);
-				/*
-				 * nameField.setText(""); carbField.setText("");; proteinField.setText("");
-				 * fatField.setText("");
-				 */
 				dispose();
 			}
 		});

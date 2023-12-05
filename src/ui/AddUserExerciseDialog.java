@@ -1,11 +1,13 @@
 package ui;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import health.DailyInfo;
@@ -30,7 +32,7 @@ public class AddUserExerciseDialog extends javax.swing.JDialog {
 	public void setup() {
 
 		setTitle("운동추가");
-		setLayout(new GridLayout(6, 2));
+		setLayout(new GridLayout(7, 2));
 
 		dateField = new JTextField();
 		nameField = new JTextField();
@@ -41,10 +43,14 @@ public class AddUserExerciseDialog extends javax.swing.JDialog {
 		add(new JLabel("날짜"));
 		add(dateField);
 		add(new JLabel("운동이름"));
-		add(nameField);	
+		add(nameField);
 		add(new JLabel("운동 시간"));
 		add(sizeField);
-		add(addFoodButton);
+
+		JPanel buttonPanel = new JPanel(new BorderLayout());
+	    buttonPanel.add(addFoodButton, BorderLayout.CENTER);
+	    add(new JLabel(""));
+		add(buttonPanel);
 
 		addFoodButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -59,7 +65,7 @@ public class AddUserExerciseDialog extends javax.swing.JDialog {
 					user.findDaily(date).userExerciseMgr.add(userExercise);
 				else {
 					DailyInfo dailyInfo = new DailyInfo(date);
-					dailyInfo.addExerciseDone(userExercise);
+					dailyInfo.userExerciseMgr.add(userExercise);
 					user.dailyInfos.add(dailyInfo);
 				}
 

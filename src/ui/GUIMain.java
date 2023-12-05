@@ -7,20 +7,13 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import facade.DataEngineImpl;
-import health.ExerciseMgr;
+import health.AerobicExerciseMgr;
+import health.AnaerobicExerciseMgr;
 import health.FoodMgr;
 import health.UserMgr;
 
 public class GUIMain {
-	
-	/*
-	 *	유저마다 유저운동, 음식 불러오기
-	 *  데이터 추가시 바로 새로고침
-	 * 	루틴 추천, 유저 프로필사진 추가
-	 * 	디자인
-	 * 	데이터 쓰기 구현 논의
-	 */
-	
+
 	static UserMgr userMgr;
 	
 	private static GUIMain main = null;
@@ -49,11 +42,10 @@ public class GUIMain {
 		
 		frame.getContentPane().add(jtab);
 		frame.pack();
-		frame.setLocationRelativeTo(jtab); // 화면 중앙에 표시
+		frame.setLocationRelativeTo(jtab);
 		frame.setVisible(true);
 		
 	}
-	
 	
 	private JPanel userPane;
 	TableSelectionDemo userTable = new TableSelectionDemo();
@@ -85,14 +77,34 @@ public class GUIMain {
 	private JPanel exercisePane;
 	TableSelectionDemo exerciseTable = new TableSelectionDemo();
 	ExerciseBottomPanel exerciseBottom = new ExerciseBottomPanel();
-	
+
 	private void setupExercisePane() {
 		exercisePane = new JPanel(new BorderLayout());
-		exerciseTable.tableTitle = "exercise";
-		exerciseTable.addComponentsToPane(ExerciseMgr.getInstance());
-		exerciseBottom.setupBottomPane(exerciseTable);
-		exercisePane.add(exerciseBottom, BorderLayout.SOUTH);
-		exercisePane.add(exerciseTable, BorderLayout.CENTER);
+		JTabbedPane exerciseTab = new JTabbedPane();
+
+		TableSelectionDemo aerobicTable = new TableSelectionDemo();
+		TableSelectionDemo anaerobicTable = new TableSelectionDemo();
+		JPanel aerobicPane = new JPanel(new BorderLayout());
+		JPanel anaerobicPane = new JPanel(new BorderLayout());
+
+		// '유산소' 탭 설정
+		aerobicTable.tableTitle = "aerobic";
+		aerobicTable.addComponentsToPane(AerobicExerciseMgr.getInstance());
+		// 이 부분을 ExerciseMgr.getInstance().getAerobicExercises()
+		// 로 수정하려고 했는데, 오류 발생
+		aerobicPane.add(aerobicTable, BorderLayout.CENTER);
+
+		// '무산소' 탭 설정
+		anaerobicTable.tableTitle = "anaerobic";
+		anaerobicTable.addComponentsToPane(AnaerobicExerciseMgr.getInstance());
+		// 이 부분을 ExerciseMgr.getInstance().getAnAerobicExercises()
+		// 로 수정하려고 했는데, 오류 발생
+		anaerobicPane.add(anaerobicTable, BorderLayout.CENTER);
+
+		exerciseTab.add("유산소", aerobicPane);
+		exerciseTab.add("무산소", anaerobicPane);
+
+		exercisePane.add(exerciseTab, BorderLayout.CENTER);
 	}
 	
 	

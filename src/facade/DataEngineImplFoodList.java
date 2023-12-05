@@ -41,7 +41,6 @@ public abstract class DataEngineImplFoodList<T extends Manageable> extends Array
         }
         return results;
     }
-
     @Override
     public void update(String[] editTexts) {
         for (UserFood item : this) {
@@ -51,7 +50,6 @@ public abstract class DataEngineImplFoodList<T extends Manageable> extends Array
             }
         }
     }
-
     @Override
     public void remove(String kwd) {
         this.removeIf(item -> item.toString().equals(kwd));

@@ -27,7 +27,7 @@ void setupTopPane(TableSelectionDemo tableDemo) {
 				
 		JButton regist = new JButton("유저 추가");
 		topPane.add(regist, BorderLayout.SOUTH);
-		add(topPane, BorderLayout.PAGE_START);
+		add(topPane, BorderLayout.SOUTH);
 		
 		detail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -9,7 +9,7 @@ public class UserExercise implements Manageable, UIData {
 	Exercise exercise;
 	Double weight;
 	int duration;
-	int caloriesBurned; // 칼로리 소모량 (칼로리) = METs × 체중(kg) × 시간(분)
+	int caloriesBurned;
 
 	String date;
 

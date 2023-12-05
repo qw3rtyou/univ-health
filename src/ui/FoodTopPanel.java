@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-@SuppressWarnings("serial")
 public class FoodTopPanel extends JPanel {
 	
 	JTextField kwdTextField = new JTextField("", 20);
@@ -16,12 +15,7 @@ public class FoodTopPanel extends JPanel {
 	
 	void setupTopPane(TableSelectionDemo tableDemo) {
 		JPanel topPane = new JPanel();
-		
-		/*
-		JButton detail = new JButton("상세보기");
-		topPane.add(detail, BorderLayout.LINE_START);
-		*/
-		
+
 		topPane.add(kwdTextField, BorderLayout.CENTER);
 		
 		JButton search = new JButton("검색");
@@ -30,17 +24,6 @@ public class FoodTopPanel extends JPanel {
 		
 		JButton addFood = new JButton("음식추가");
 		topPane.add(addFood, BorderLayout.SOUTH);
-		
-		/*
-		detail.addActionListener(new ActionListener () {
-			public void actionPerformed(ActionEvent e) {
-				if (e.getActionCommand().equals("상세보기")) {
-					tableDemo.showDetail();
-				}
-			}
-		});
-		*/
-		
 		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getActionCommand().equals("검색")) {

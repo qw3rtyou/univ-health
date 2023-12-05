@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,7 +46,7 @@ public class AddUserFoodDialog extends javax.swing.JDialog {
 		add(nameField);
 		add(new JLabel("먹은 양(g)"));
 		add(sizeField);
-		add(addFoodButton);
+		add(addFoodButton,BorderLayout.SOUTH);
 
 		addFoodButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -60,11 +61,10 @@ public class AddUserFoodDialog extends javax.swing.JDialog {
 					user.findDaily(date).userFoodMgr.add(userFood);
 				else {
 					DailyInfo dailyInfo = new DailyInfo(date);
-					dailyInfo.addFoodEaten(userFood);
+					dailyInfo.userFoodMgr.add(userFood);
 					user.dailyInfos.add(dailyInfo);
-				
 				}
-				
+
 				dispose();
 			}
 		});

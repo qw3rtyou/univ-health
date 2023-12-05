@@ -14,7 +14,7 @@ public class User implements Manageable, UIData {
 	public String gender;
 	public int goal;
 	public ArrayList<DailyInfo> dailyInfos = new ArrayList<>();
-
+	private String profileImagePath;
 	public User(String name, double height, double weight, String gender, int goal) {
 		this.name = name;
 		this.height = height;
@@ -29,9 +29,7 @@ public class User implements Manageable, UIData {
 	@Override
 	public void set(Object[] uitexts) {
 		// TODO Auto-generated method stub
-
 	}
-
 	@Override
 	public String[] getUiTexts() {
 		// TODO Auto-generated method stub
@@ -82,14 +80,14 @@ public class User implements Manageable, UIData {
 	String foodRecommend() {
 		DailyInfo dailyInfo = getCurrentDailyInfo();
 
-		int recommendedDailyCal = (int) weight * 30; // 하루 권장 섭취량은 30*몸무게
-		int metabolism = (int) (recommendedDailyCal * 0.4);// 기초대사량은 일반적으로 권장 섭취량의 0.4배
+		int recommendedDailyCal = (int) weight * 30;
+		int metabolism = (int) (recommendedDailyCal * 0.4);
 		int curCal = dailyInfo.getDailyCalInput();
 
 		boolean isGoalLoss = weight > goal;
 		String buf = "";
 
-		if (isGoalLoss) {// 감량이 목적이라면
+		if (isGoalLoss) {
 			if ((recommendedDailyCal - metabolism) > curCal) {
 				buf += "목표치보다 " + (recommendedDailyCal - metabolism - curCal);
 				buf += "만큼 덜 먹었음\n";
@@ -99,7 +97,7 @@ public class User implements Manageable, UIData {
 				buf += "만큼 더 먹었음\n";
 				buf += "샐러드,닭가슴살,계란,두부,브로콜리,토마토,오이,상추,연어,닭다리\n";
 			}
-		} else {// 증량이 목적이라면
+		} else {
 			if ((recommendedDailyCal - metabolism) > curCal) {
 				buf += "목표치보다 " + (recommendedDailyCal - metabolism - curCal);
 				buf += "만큼 덜 먹었음\n";
@@ -217,5 +215,11 @@ public class User implements Manageable, UIData {
 
 		return buf;
 	}
+	public void setProfileImagePath(String profileImagePath) {
 
+		this.profileImagePath = profileImagePath;
+	}
+	public String getProfileImagePath() {
+		return profileImagePath;
+	}
 }

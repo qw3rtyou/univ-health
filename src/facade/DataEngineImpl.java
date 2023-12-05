@@ -14,7 +14,6 @@ public abstract class DataEngineImpl<T extends Manageable> extends Manager<T>
 	public int getColumnCount() {
 		return labels.length;
 	}
-	// 테이블의 열 제목을 스트링 배열로 돌려줌
 	public String[] getColumnNames() {		
 		return labels;
 	}
@@ -44,6 +43,9 @@ public abstract class DataEngineImpl<T extends Manageable> extends Manager<T>
 	public UIData get(int index) {
 		// TODO Auto-generated method stub
 		return (UIData)mList.get(index);
+	}
+	public List<T> getData() {
+		return mList;
 	}
 	public void addElement(T a) {
 		mList.add(a);

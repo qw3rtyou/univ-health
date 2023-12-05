@@ -14,16 +14,15 @@ public class Manager<T extends Manageable> {
 	    return null;
 	}
 	public void readAll(String filename, Factory<T> fac) {
-		Scanner filein = openFile(filename);
+		Scanner file = openFile(filename);
 		T m = null;
-		while (filein.hasNext()) {
+		while (file.hasNext()) {
 			m = fac.create();
-			m.read(filein);
+			m.read(file);
 			mList.add(m);
 		}
-		filein.close();
+		file.close();
 	}
-
 	public void printAll() {
 		for (T m : mList) {
 			m.print();
