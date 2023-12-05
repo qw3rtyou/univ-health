@@ -82,22 +82,29 @@ public class GUIMain {
 
 	private void setupExercisePane() {
 		exercisePane = new JPanel(new BorderLayout());
-//		JTabbedPane exerciseTab = new JTabbedPane();
-//
-//		TableSelectionDemo aerobicTable = ne	w TableSelectionDemo();
-//		TableSelectionDemo anaerobicTable = new TableSelectionDemo();
-//		JPanel aerobicPane = new JPanel(new BorderLayout());
-//		JPanel anaerobicPane = new JPanel(new BorderLayout());
-//
-//		// '유산소' 탭 설정
-//		aerobicTable.tableTitle = "aerobic";
-//		aerobicTable.addComponentsToPane(AerobicExerciseMgr.getInstance());
-//		aerobicPane.add(aerobicTable, BorderLayout.CENTER);
-//
-//		// '무산소' 탭 설정
-//		anaerobicTable.tableTitle = "anaerobic";
-//		anaerobicTable.addComponentsToPane(AnaerobicExerciseMgr.getInstance());
-//		anaerobicPane.add(anaerobicTable, BorderLayout.CENTER);
+		JTabbedPane exerciseTab = new JTabbedPane();
+
+		TableSelectionDemo aerobicTable = new TableSelectionDemo();
+		TableSelectionDemo anaerobicTable = new TableSelectionDemo();
+		JPanel aerobicPane = new JPanel(new BorderLayout());
+		JPanel anaerobicPane = new JPanel(new BorderLayout());
+
+		// '유산소' 탭 설정
+		aerobicTable.tableTitle = "aerobic";
+		aerobicTable.addComponentsToPane(AerobicExerciseMgr.getInstance());
+		aerobicPane.add(aerobicTable, BorderLayout.CENTER);
+
+		// '무산소' 탭 설정
+		anaerobicTable.tableTitle = "anaerobic";
+		anaerobicTable.addComponentsToPane(AnaerobicExerciseMgr.getInstance());
+		anaerobicPane.add(anaerobicTable, BorderLayout.CENTER);
+
+		// '전체' 탭 설정
+		TableSelectionDemo totalTable = new TableSelectionDemo();
+		JPanel totalPane = new JPanel(new BorderLayout());
+		totalTable.tableTitle = "total";
+		totalTable.addComponentsToPane(ExerciseMgr.getInstance());  // 이 부분은 유산소와 무산소 운동 데이터를 합친 결과를 가져오는 것으로 수정해야 합니다.
+		totalPane.add(totalTable, BorderLayout.CENTER);
 
 		exerciseTable.tableTitle = "exercise";
 		exerciseTable.addComponentsToPane(ExerciseMgr.getInstance());
@@ -105,11 +112,15 @@ public class GUIMain {
 		exercisePane.add(exerciseBottom, BorderLayout.NORTH);
 		exercisePane.add(exerciseTable, BorderLayout.CENTER);
 
-//		exerciseTab.add("운동", exercisePane);
-//		exerciseTab.add("유산소", aerobicPane);
-//		exerciseTab.add("무산소", anaerobicPane);
+		exerciseTab.add("유산소", aerobicPane);
+		exerciseTab.add("무산소", anaerobicPane);
+		exerciseTab.add("전체", totalPane);
 
-//		exercisePane.add(exerciseTab, BorderLayout.NORTH);
+		exerciseTable.tableTitle = "exercise";
+		exerciseTable.addComponentsToPane(ExerciseMgr.getInstance());
+		exerciseBottom.setupBottomPane(exerciseTable);
+		exercisePane.add(exerciseBottom, BorderLayout.NORTH);
+		exercisePane.add(exerciseTab, BorderLayout.CENTER); // 이 부분을 수정했습니다.
 	}
 
 	public static void startGUI() {
