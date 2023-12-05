@@ -204,7 +204,6 @@ public class User implements Manageable, UIData {
 	}
 
 	public String toStringforExerciseFile() {
-		name = name.trim();
 		String buf = "";
 		ArrayList<UserExercise> userExercises;
 		for (DailyInfo dailyInfo : dailyInfos) {

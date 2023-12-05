@@ -69,4 +69,10 @@ public class Food implements Manageable, UIData {
 		return false;
 	}
 
+	public String toStringforFile() {
+		name = name.trim();
+		String buf = "";
+		buf += name + " " + carbRatio + " " + proteinRatio + " " + fatRatio + "\n";
+		return buf;
+	}
 }

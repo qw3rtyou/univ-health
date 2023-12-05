@@ -2,6 +2,7 @@ package health;
 
 import mgr.Manageable;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import facade.UIData;
@@ -79,6 +80,17 @@ public class Exercise implements Manageable, UIData {
 		texts[2] = "" + mets;
 		texts[3] = part;
 		return texts;
+	}
+
+	public String toStringforFile() {
+		name = name.trim();
+		String buf = "";
+		if (type.equals("유산소")) {
+			buf += type + " " + name + " " + mets + "\n";
+		} else {
+			buf += type + " " + name + " " + mets + " " + part + "\n";
+		}
+		return buf;
 	}
 
 }

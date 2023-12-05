@@ -183,5 +183,21 @@ public class Health {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH_FOOD))) {
+			for (Manageable food : FoodMgr.getInstance().mList) {
+				writer.write(((Food) food).toStringforFile());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH_EXERCISE))) {
+			for (Manageable exercise : ExerciseMgr.getInstance().mList) {
+				writer.write(((Exercise) exercise).toStringforFile());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
