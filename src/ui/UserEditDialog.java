@@ -8,12 +8,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+@SuppressWarnings("serial")
 public class UserEditDialog extends JDialog {
     private JTextField nameField, heightField, genderField, weightField, targetWeightField;
-    private User user;
 
     public UserEditDialog(User user) {
-        this.user = user;
         setLayout(new GridLayout(6, 2));
 
         nameField = new JTextField(user.getName());
@@ -48,7 +47,7 @@ public class UserEditDialog extends JDialog {
                 dispose();
             }
         });
-
+        setLocationRelativeTo(null);
         add(new JLabel(""));
         add(saveButton);
     }

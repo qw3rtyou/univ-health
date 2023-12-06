@@ -1,6 +1,8 @@
 package health;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import facade.UIData;
@@ -49,11 +51,11 @@ public class User implements Manageable, UIData {
 
 	@Override
 	public void set(Object[] uitexts) {
-		this.name = (String)uitexts[0];
-		this.height = Double.parseDouble((String)uitexts[1]);
-		this.gender = (String)uitexts[2];
-		this.weight = Double.parseDouble((String)uitexts[3]);
-		this.goal = Integer.parseInt((String)uitexts[4]);
+		this.name = (String) uitexts[0];
+		this.height = Double.parseDouble((String) uitexts[1]);
+		this.gender = (String) uitexts[2];
+		this.weight = Double.parseDouble((String) uitexts[3]);
+		this.goal = Integer.parseInt((String) uitexts[4]);
 	}
 
 	public void setName(String name) {
@@ -71,6 +73,7 @@ public class User implements Manageable, UIData {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
 	public void setTargetWeight(double parseDouble) {
 		this.goal = (int) parseDouble;
 	}
@@ -122,7 +125,7 @@ public class User implements Manageable, UIData {
 		return null;
 	}
 
-	String foodRecommend() {
+	public String foodRecommend() {
 		DailyInfo dailyInfo = getCurrentDailyInfo();
 
 		int recommendedDailyCal = (int) weight * 30;
@@ -130,64 +133,64 @@ public class User implements Manageable, UIData {
 		int curCal = dailyInfo.getDailyCalInput();
 
 		boolean isGoalLoss = weight > goal;
-		String buf = "";
+		String buf = "<html>";
 
 		if (isGoalLoss) {
 			if ((recommendedDailyCal - metabolism) > curCal) {
 				buf += "목표치보다 " + (recommendedDailyCal - metabolism - curCal);
-				buf += "만큼 덜 먹었음\n";
-				buf += "쌀밥,감자,우유,콩나물국,김치찌개,순두부찌개,김밥,초밥,닭볶음탕,맥주\n";
+				buf += "만큼 덜 먹었음<br>";
+				buf += "추천 매뉴 : 쌀밥,감자,우유,콩나물국,김치찌개,순두부찌개,김밥,초밥,닭볶음탕,맥주<br>";
 			} else {
 				buf += "목표치보다 " + (curCal - recommendedDailyCal + metabolism);
-				buf += "만큼 더 먹었음\n";
-				buf += "샐러드,닭가슴살,계란,두부,브로콜리,토마토,오이,상추,연어,닭다리\n";
+				buf += "만큼 더 먹었음<br>";
+				buf += "추천 매뉴 : 샐러드,닭가슴살,계란,두부,브로콜리,토마토,오이,상추,연어,닭다리<br>";
 			}
 		} else {
 			if ((recommendedDailyCal - metabolism) > curCal) {
 				buf += "목표치보다 " + (recommendedDailyCal - metabolism - curCal);
-				buf += "만큼 덜 먹었음\n";
-				buf += "빵,피자,햄버거,스파게티,비빔밥,라면,갈비,제육볶음,돈까스,파스타\n";
+				buf += "만큼 덜 먹었음<br>";
+				buf += "추천 매뉴 : 빵,피자,햄버거,스파게티,비빔밥,라면,갈비,제육볶음,돈까스,파스타<br>";
 			} else {
 				buf += "목표치보다 " + (curCal - recommendedDailyCal + metabolism);
-				buf += "만큼 더 먹었음\n";
-				buf += "쌀밥,감자,우유,콩나물국,김치찌개,순두부찌개,김밥,초밥,닭볶음탕,맥주\n";
+				buf += "만큼 더 먹었음<br>";
+				buf += "추천 매뉴 : 쌀밥,감자,우유,콩나물국,김치찌개,순두부찌개,김밥,초밥,닭볶음탕,맥주<br>";
 			}
 		}
 
 		return buf;
 	}
 
-//	String exerciseRecommend() {
-//		HashMap<String, Integer> partCount = new HashMap<>();
-//		partCount.put("상체", 0);
-//		partCount.put("하체", 0);
-//		partCount.put("등", 0);
-//		partCount.put("기슴", 0);
-//		partCount.put("어깨", 0);
-//
-//		for (UserExercise userExercise : getCurrentDailyInfo().getExercises()) {
-//			if (userExercise.getExercise() instanceof AnaerobicExercise) {
-//				AnaerobicExercise anaerobicExercise = (AnaerobicExercise) userExercise.getExercise();
-//				String part = anaerobicExercise.part;
-//				partCount.put(part, partCount.getOrDefault(part, 0) + 1);
-//			}
-//		}
-//		System.out.println(partCount);
-//
-//		String leastUsedPart = null;
-//		int minCount = Integer.MAX_VALUE;
-//		for (Map.Entry<String, Integer> entry : partCount.entrySet()) {
-//			if (entry.getValue() < minCount) {
-//				minCount = entry.getValue();
-//				leastUsedPart = entry.getKey();
-//			}
-//		}
-//
-//		if (leastUsedPart != null) {
-//			return "무산소 운동 정보가 없습니다.";
-//		}
-//		return "추천 부위 : " + leastUsedPart;
-//	}
+	public String exerciseRecommend() {
+		HashMap<String, Integer> partCount = new HashMap<>();
+		partCount.put("상체", 0);
+		partCount.put("하체", 0);
+		partCount.put("등", 0);
+		partCount.put("기슴", 0);
+		partCount.put("어깨", 0);
+
+		for (UserExercise userExercise : getCurrentDailyInfo().userExerciseMgr) {
+			if (userExercise.exercise.matches("무산소")) {
+				Exercise anaerobicExercise = userExercise.exercise;
+				String part = anaerobicExercise.part;
+				partCount.put(part, partCount.getOrDefault(part, 0) + 1);
+			}
+		}
+		System.out.println(partCount);
+
+		String leastUsedPart = null;
+		int minCount = Integer.MAX_VALUE;
+		for (Map.Entry<String, Integer> entry : partCount.entrySet()) {
+			if (entry.getValue() < minCount) {
+				minCount = entry.getValue();
+				leastUsedPart = entry.getKey();
+			}
+		}
+
+		if (leastUsedPart != null) {
+			return "무산소 운동 정보가 없습니다.";
+		}
+		return "추천 부위 : " + leastUsedPart;
+	}
 
 	public Boolean isDailyExist(Date date) {
 		for (DailyInfo dailyInfo : dailyInfos) {
@@ -237,7 +240,7 @@ public class User implements Manageable, UIData {
 		ArrayList<UserFood> userFoods;
 		for (DailyInfo dailyInfo : dailyInfos) {
 			userFoods = dailyInfo.userFoodMgr;
-			if (userFoods.size()==0) 
+			if (userFoods.size() == 0)
 				continue;
 			buf += name + " " + dailyInfo.getDate().toFileString() + " " + userFoods.size() + "\n";
 			for (UserFood userFood : userFoods) {
@@ -253,7 +256,7 @@ public class User implements Manageable, UIData {
 		ArrayList<UserExercise> userExercises;
 		for (DailyInfo dailyInfo : dailyInfos) {
 			userExercises = dailyInfo.userExerciseMgr;
-			if (userExercises.size()==0) 
+			if (userExercises.size() == 0)
 				continue;
 			buf += name + " " + dailyInfo.getDate().toFileString() + " " + userExercises.size() + "\n";
 			for (UserExercise userExercise : userExercises) {
@@ -272,7 +275,5 @@ public class User implements Manageable, UIData {
 	public String getProfileImagePath() {
 		return profileImagePath;
 	}
-
-
 
 }

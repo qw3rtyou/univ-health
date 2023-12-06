@@ -45,6 +45,15 @@ public class Food implements Manageable, UIData {
 		texts[3] = fatRatio;
 		return texts;
 	}
+	
+//	public String[] getUiTexts() {
+//	    String[] texts = new String[4];
+//	    texts[0] = "<html><span style='font-size:12px;'>" + name + "</span></html>";
+//	    texts[1] = "<html><span style='font-size:12px;'>" + carbRatio + "</span></html>";
+//	    texts[2] = "<html><span style='font-size:12px;'>" + proteinRatio + "</span></html>";
+//	    texts[3] = "<html><span style='font-size:12px;'>" + fatRatio + "</span></html>";
+//	    return texts;
+//	}
 
 	@Override
 	public void read(Scanner scan) {

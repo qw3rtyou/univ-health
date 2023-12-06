@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -10,7 +11,9 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import facade.IDataEngine;
 import facade.UIData;
@@ -54,7 +57,15 @@ public class TableSelectionDemo extends JPanel implements ListSelectionListener 
 		ListSelectionModel rowSM = table.getSelectionModel();
 		rowSM.addListSelectionListener(this);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 220));
-		table.setRowHeight(30);
+		
+		table.setRowHeight(30);	//셀 높이 설정
+//		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+//	    renderer.setFont(new Font("Serif", Font.BOLD, 30)); // 폰트와 글씨 크기 설정
+//	    TableColumnModel columnModel = table.getColumnModel();
+//	    for (int i = 0; i < columnModel.getColumnCount(); i++) {
+//	        columnModel.getColumn(i).setCellRenderer(renderer);
+//	    }
+		
 		table.setFillsViewportHeight(true);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.updateUI();

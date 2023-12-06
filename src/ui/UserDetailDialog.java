@@ -65,7 +65,6 @@ public class UserDetailDialog extends javax.swing.JDialog {
 		userFoodPane.add(userFoodTable, BorderLayout.CENTER);
 		jtab.add("음식정보", userFoodPane);
 
-
 		JPanel BottomPane = new JPanel();
 
 		JButton addFoodButton = new JButton("음식추가");
@@ -92,7 +91,8 @@ public class UserDetailDialog extends javax.swing.JDialog {
 
 		JLabel photo = new JLabel();
 		photo.setOpaque(true);
-		photo.setPreferredSize(new Dimension(250, 250));;
+		photo.setPreferredSize(new Dimension(250, 250));
+		;
 		photo.setBackground(Color.gray);
 		String profileImagePath = user.getProfileImagePath();
 		if (profileImagePath != null) {
@@ -124,8 +124,7 @@ public class UserDetailDialog extends javax.swing.JDialog {
 
 		this.setMinimumSize(new Dimension(400, 150));
 		setContentPane(pane);
-		setLocationRelativeTo(pane);
-
+		setLocationRelativeTo(null);
 		JButton editButton = new JButton("수정하기");
 		BottomPane.add(editButton, BorderLayout.EAST);
 		editButton.addActionListener(new ActionListener() {
@@ -134,16 +133,27 @@ public class UserDetailDialog extends javax.swing.JDialog {
 				userEditDialog.pack();
 				userEditDialog.setVisible(true);
 
-				userDetails[0] = user.getName();
-				userDetails[1] = String.valueOf(user.getHeight());
-				userDetails[2] = user.getGender();
-				userDetails[3] = String.valueOf(user.getWeight());
-				userDetails[4] = String.valueOf(user.getTargetWeight());
-				details[0].setText("이름: " + userDetails[0]);
-				details[1].setText("키: " + userDetails[1]);
-				details[2].setText("성별: " + userDetails[2]);
-				details[3].setText("몸무게: " + userDetails[3]);
-				details[4].setText("목표체중: " + userDetails[4]);
+//				userDetails[0] = user.getName();
+//				userDetails[1] = String.valueOf(user.getHeight());
+//				userDetails[2] = user.getGender();
+//				userDetails[3] = String.valueOf(user.getWeight());
+//				userDetails[4] = String.valueOf(user.getTargetWeight());
+//				details[0].setText("이름: " + userDetails[0]);
+//				details[1].setText("키: " + userDetails[1]);
+//				details[2].setText("성별: " + userDetails[2]);
+//				details[3].setText("몸무게: " + userDetails[3]);
+//				details[4].setText("목표체중: " + userDetails[4]); //이거 없어도 될것 같은데?
+
+				UserMgr.getInstance().updateUser(user);
+			}
+		});
+		JButton recommandButton = new JButton("추천받기");
+		BottomPane.add(recommandButton, BorderLayout.EAST);
+		recommandButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UserRecommandDialog userRecommandDialog = new UserRecommandDialog(user);
+				userRecommandDialog.pack();
+				userRecommandDialog.setVisible(true);
 
 				UserMgr.getInstance().updateUser(user);
 			}
