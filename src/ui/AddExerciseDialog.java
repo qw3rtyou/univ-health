@@ -47,13 +47,11 @@ public class AddExerciseDialog extends javax.swing.JDialog {
 				Double mets = Double.parseDouble(metsField.getText());
 				String part = partField.getText();
 
-				Exercise exercise = new Exercise(name, type, mets, part);
+				Exercise exercise = new Exercise(name, type, mets, part, null);
 				ExerciseMgr.getInstance().addElement(exercise);
 				dispose();
 			}
 		});
 	}
-
-
 
 }

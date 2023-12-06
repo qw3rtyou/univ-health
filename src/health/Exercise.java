@@ -1,17 +1,16 @@
 package health;
 
-import mgr.Manageable;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import facade.UIData;
+import mgr.Manageable;
 
 public class Exercise implements Manageable, UIData {
 	String type;
 	String name;
 	Double mets;
 	String part;
+	String photoDir;
 
 	public Exercise() {
 	}
@@ -20,12 +19,12 @@ public class Exercise implements Manageable, UIData {
 		return type;
 	}
 
-	public Exercise(String type, String name, Double mets, String part) {
-
+	public Exercise(String type, String name, Double mets, String part, String photoDir) {
 		this.type = type;
 		this.name = name;
 		this.mets = mets;
 		this.part = part;
+		this.photoDir = photoDir;
 	}
 
 	@Override
@@ -36,13 +35,15 @@ public class Exercise implements Manageable, UIData {
 			name = scan.next();
 			mets = scan.nextDouble();
 			part = "";
+			photoDir = scan.next();
 		}
 		if (type.equals("무산소")) {
 			name = scan.next();
 			mets = scan.nextDouble();
 			part = scan.next();
+			photoDir = scan.next();
 		}
-
+		System.out.println(name);
 	}
 
 	@Override
@@ -73,11 +74,13 @@ public class Exercise implements Manageable, UIData {
 	@Override
 	public String[] getUiTexts() {
 		// TODO Auto-generated method stub
-		String[] texts = new String[4];
+		String[] texts = new String[5];
 		texts[0] = User.string2Tag(type);
 		texts[1] = User.string2Tag(name);
 		texts[2] = User.string2Tag("" + mets);
 		texts[3] = User.string2Tag(part);
+		//texts[4] = "사아아진<html><img src='" + photoDir + "'></html>";
+		texts[4] = "<html><img src='file:" + photoDir + "'></html>";
 		return texts;
 	}
 
@@ -89,9 +92,9 @@ public class Exercise implements Manageable, UIData {
 		name = name.trim();
 		String buf = "";
 		if (type.equals("유산소")) {
-			buf += type + " " + name + " " + mets + "\n";
+			buf += type + " " + name + " " + mets + " " + photoDir + "\n";
 		} else {
-			buf += type + " " + name + " " + mets + " " + part + "\n";
+			buf += type + " " + name + " " + mets + " " + part + " " + photoDir + "\n";
 		}
 		return buf;
 	}

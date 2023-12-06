@@ -23,7 +23,6 @@ import health.UserExercise;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
-import net.sourceforge.jdatepicker.DateModel;
 
 public class AddUserExerciseDialog extends javax.swing.JDialog {
 	JDatePickerImpl datePicker;
