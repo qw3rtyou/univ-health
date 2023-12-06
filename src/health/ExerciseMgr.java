@@ -15,11 +15,16 @@ public class ExerciseMgr extends DataEngineImpl<Exercise> {
 		exercises = new ArrayList<>(); // 초기화
 		setLabels(headers);
 		readAll("data/exercise_data.txt");
+
+
 	}
 
 	public List<Exercise> getExercises() {
 		return exercises;
 	}
+
+
+
 
 	private void readAll(String filename) {
 		Scanner file = openFile(filename);

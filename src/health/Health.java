@@ -1,5 +1,7 @@
 package health;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -10,6 +12,7 @@ import java.util.Scanner;
 import mgr.Factory;
 import mgr.Manageable;
 import ui.GUIMain;
+import ui.MainFrame;
 
 public class Health {
 	final static String DATA_DIRECTORY = "data/";
@@ -82,11 +85,30 @@ public class Health {
 
 	}
 
+//	public static void main(String[] args) {
+//		Health health = new Health();
+//		MainFrame mainFrame = new MainFrame();
+//		mainFrame.setVisible(true);
+//		Runtime.getRuntime().addShutdownHook(new Thread(() -> health.saveCurrentState()));	//훅 등록
+//		health.run();
+//		GUIMain.startGUI();
+//	}
+
 	public static void main(String[] args) {
 		Health health = new Health();
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> health.saveCurrentState()));	//훅 등록
+		MainFrame mainFrame = new MainFrame();
+		mainFrame.setVisible(true);
+
+		// MainFrame이 닫힐 때 실행될 동작 설정
+		mainFrame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				GUIMain.startGUI();
+			}
+		});
+
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> health.saveCurrentState()));    //훅 등록
 		health.run();
-		GUIMain.startGUI();
 	}
 
 	public void loadDailyFoodFromFile(String filename) {
