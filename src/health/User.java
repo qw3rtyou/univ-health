@@ -137,21 +137,21 @@ public class User implements Manageable, UIData {
 
 		if (isGoalLoss) {
 			if ((recommendedDailyCal - metabolism) > curCal) {
-				buf += "목표치보다 <span style='color:red;'>" + (recommendedDailyCal - metabolism - curCal) + "</span>";
+				buf += "권장량보다 <span style='color:red;'>" + (recommendedDailyCal - metabolism - curCal) + "</span>";
 				buf += "만큼 덜 먹었음<br>";
 				buf += "추천 메뉴 : 쌀밥,감자,우유,콩나물국,김치찌개,순두부찌개,김밥,초밥,닭볶음탕,맥주<br>";
 			} else {
-				buf += "목표치보다 <span style='color:red;'>" + (curCal - recommendedDailyCal + metabolism) + "</span>";
+				buf += "권장량보다 <span style='color:red;'>" + (curCal - recommendedDailyCal + metabolism) + "</span>";
 				buf += "만큼 더 먹었음<br>";
 				buf += "추천 메뉴 : 샐러드,닭가슴살,계란,두부,브로콜리,토마토,오이,상추,연어,닭다리<br>";
 			}
 		} else {
 			if ((recommendedDailyCal - metabolism) > curCal) {
-				buf += "목표치보다 <span style='color:red;'>" + (recommendedDailyCal - metabolism - curCal) + "</span>";
+				buf += "권장량보다 <span style='color:red;'>" + (recommendedDailyCal - metabolism - curCal) + "</span>";
 				buf += "만큼 덜 먹었음<br>";
 				buf += "추천 메뉴 : 빵,피자,햄버거,스파게티,비빔밥,라면,갈비,제육볶음,돈까스,파스타<br>";
 			} else {
-				buf += "목표치보다 <span style='color:red;'>" + (curCal - recommendedDailyCal + metabolism) + "</span>";
+				buf += "권장량보다 <span style='color:red;'>" + (curCal - recommendedDailyCal + metabolism) + "</span>";
 				buf += "만큼 더 먹었음<br>";
 				buf += "추천 메뉴 : 쌀밥,감자,우유,콩나물국,김치찌개,순두부찌개,김밥,초밥,닭볶음탕,맥주<br>";
 			}
@@ -161,6 +161,8 @@ public class User implements Manageable, UIData {
 	}
 
 	public String exerciseRecommend() {
+		String buf = "<html>";
+
 		HashMap<String, Integer> partCount = new HashMap<>();
 		partCount.put("상체", 0);
 		partCount.put("하체", 0);
@@ -190,10 +192,30 @@ public class User implements Manageable, UIData {
 			}
 		}
 
+		DailyInfo dailyInfo = getCurrentDailyInfo();
+
+		int recommendedDailyCal = (int) weight * 30;
+		int metabolism = (int) (recommendedDailyCal * 0.4);
+		int curCal = dailyInfo.getDailyCalInput();
+
 		if (leastUsedPart == null) {
-			return "<html><span style='color:red;'>무산소 운동 정보가 없습니다.</span>";
+			buf += "무산소 추천 운동 : <span style='color:red;'>무산소 운동 정보가 없습니다.</span>";
+		} else {
+			buf += "무산소 추천 운동 : <span style='color:red;'>" + leastUsedPart + "</span><br>";
 		}
-		return "<html>추천 부위 : <span style='color:red;'>" + leastUsedPart + "</span>";
+
+		int targetCal = -recommendedDailyCal + metabolism + curCal;
+		System.out.println(targetCal);
+		int rand = (int) (Math.random() * AerobicExerciseMgr.getInstance().mList.size());
+		Exercise randomExercise = AerobicExerciseMgr.getInstance().mList.get(rand);
+
+		if (recommendedDailyCal - metabolism < curCal) {
+			buf += "유산소 추천 운동 : <span style='color:red;'>" + randomExercise.name + " "
+					+ (int) (targetCal / randomExercise.mets / 30) + "분</span>";
+		}
+
+		buf += "</html>";
+		return buf;
 	}
 
 	public Boolean isDailyExist(Date date) {
@@ -280,7 +302,6 @@ public class User implements Manageable, UIData {
 		return profileImagePath;
 	}
 
-	
 	public static String string2Tag(String str) {
 		return "<html><span style='font-size:12px;'>" + str + "</span></html>";
 	}
