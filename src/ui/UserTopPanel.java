@@ -25,7 +25,7 @@ void setupTopPane(TableSelectionDemo tableDemo) {
 		JButton search = new JButton("검색");
 		topPane.add(search , BorderLayout.LINE_END);
 				
-		JButton regist = new JButton("유저 추가");
+		JButton regist = new JButton("유저추가");
 		topPane.add(regist, BorderLayout.SOUTH);
 		add(topPane, BorderLayout.SOUTH);
 		
@@ -46,7 +46,7 @@ void setupTopPane(TableSelectionDemo tableDemo) {
 		
 		regist.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (e.getActionCommand().equals("유저 추가")) {
+				if (e.getActionCommand().equals("유저추가")) {
 					tableDemo.addUser();
 				}
 			}

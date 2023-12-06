@@ -7,11 +7,14 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.ImageIcon;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 import health.DailyInfo;
 import health.User;
@@ -21,8 +24,8 @@ import health.UserFood;
 import health.UserFoodMgr;
 import health.UserMgr;
 
+@SuppressWarnings("serial")
 public class UserDetailDialog extends javax.swing.JDialog {
-	private static final long serialVersionUID = 1L;
 	String[] userDetails;
 	JLabel details[] = new JLabel[5];
 
@@ -38,7 +41,7 @@ public class UserDetailDialog extends javax.swing.JDialog {
 	}
 
 	void setup() {
-		User user = UserMgr.getInstance().find(userDetails[0]);
+		User user = UserMgr.getInstance().find("");
 
 		JTabbedPane jtab = new JTabbedPane();
 		UserExerciseMgr tmpExerciseMgr = new UserExerciseMgr();
@@ -104,18 +107,45 @@ public class UserDetailDialog extends javax.swing.JDialog {
 
 		setTitle("유저정보");
 		JPanel pane = new JPanel(new BorderLayout());
-		JPanel lpane = new JPanel(new GridLayout(5, 1));
+		JPanel lpane = new JPanel(new GridLayout(5, 2));
 
-		details[0] = new JLabel("이름: " + userDetails[0]);
-		details[1] = new JLabel("키: " + userDetails[1]);
-		details[2] = new JLabel("성별: " + userDetails[2]);
-		details[3] = new JLabel("몸무게: " + userDetails[3]);
-		details[4] = new JLabel("목표체중: " + userDetails[4]);
+		details[0] = new JLabel(userDetails[0]);
+		details[1] = new JLabel(userDetails[1]);
+		details[2] = new JLabel(userDetails[2]);
+		details[3] = new JLabel(userDetails[3]);
+		details[4] = new JLabel(userDetails[4]);
+		
+		JLabel nameLabel = new JLabel("이름: ");
+		nameLabel.setHorizontalAlignment(JLabel.CENTER);
+		JLabel heightLabel = new JLabel("키: ");
+		heightLabel.setHorizontalAlignment(JLabel.CENTER);
+		JLabel genderLabel = new JLabel("성별: ");
+		genderLabel.setHorizontalAlignment(JLabel.CENTER);
+		JLabel weightLabel = new JLabel("몸무게: ");
+		weightLabel.setHorizontalAlignment(JLabel.CENTER);
+		JLabel goalLabel = new JLabel("목표체중: ");
+		goalLabel.setHorizontalAlignment(JLabel.CENTER);
+
+		lpane.add(nameLabel);
+		details[0].setHorizontalAlignment(JLabel.CENTER);
 		lpane.add(details[0]);
+
+		lpane.add(heightLabel);
+		details[1].setHorizontalAlignment(JLabel.CENTER);
 		lpane.add(details[1]);
+
+		lpane.add(genderLabel);
+		details[2].setHorizontalAlignment(JLabel.CENTER);
 		lpane.add(details[2]);
+
+		lpane.add(weightLabel);
+		details[3].setHorizontalAlignment(JLabel.CENTER);
 		lpane.add(details[3]);
+
+		lpane.add(goalLabel);
+		details[4].setHorizontalAlignment(JLabel.CENTER);
 		lpane.add(details[4]);
+		
 
 		pane.add(BottomPane, BorderLayout.SOUTH);
 		pane.add(lpane, BorderLayout.CENTER);
