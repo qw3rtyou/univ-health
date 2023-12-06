@@ -40,13 +40,14 @@ public class UserFood implements Manageable, UIData {
 	@Override
 	public void set(Object[] uitexts) {
 	}
+
 	@Override
 	public String[] getUiTexts() {
 		String[] texts = new String[4];
-		texts[0] = date.toString();
-		texts[1] = food.name;
-		texts[2] = "" + size; // 순서 변경 size, cal
-		texts[3] = "" + cal;
+		texts[0] = User.string2Tag(date.toString());
+		texts[1] = User.string2Tag(food.name);
+		texts[2] = User.string2Tag("" + size); // 순서 변경 size, cal
+		texts[3] = User.string2Tag("" + cal);
 		return texts;
 	}
 

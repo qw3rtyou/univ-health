@@ -16,7 +16,6 @@ public class Exercise implements Manageable, UIData {
 	public Exercise() {
 	}
 
-
 	public String getType() {
 		return type;
 	}
@@ -75,12 +74,13 @@ public class Exercise implements Manageable, UIData {
 	public String[] getUiTexts() {
 		// TODO Auto-generated method stub
 		String[] texts = new String[4];
-		texts[0] = type;
-		texts[1] = name;
-		texts[2] = "" + mets;
-		texts[3] = part;
+		texts[0] = User.string2Tag(type);
+		texts[1] = User.string2Tag(name);
+		texts[2] = User.string2Tag("" + mets);
+		texts[3] = User.string2Tag(part);
 		return texts;
 	}
+
 	public String getName() {
 		return name;
 	}

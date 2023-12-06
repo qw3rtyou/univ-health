@@ -18,9 +18,11 @@ public class Food implements Manageable, UIData {
 		this.proteinRatio = proteinRatio;
 		this.fatRatio = fatRatio;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public Food() {
 	}
 
@@ -35,25 +37,25 @@ public class Food implements Manageable, UIData {
 				+ Double.parseDouble(fatRatio) * 9) / 100;
 	}
 
-	@Override
+//	@Override
+//	public String[] getUiTexts() {
+//		// TODO Auto-generated method stub
+//		String[] texts = new String[4];
+//		texts[0] = name;
+//		texts[1] = carbRatio;
+//		texts[2] = proteinRatio;
+//		texts[3] = fatRatio;
+//		return texts;
+//	}
+
 	public String[] getUiTexts() {
-		// TODO Auto-generated method stub
 		String[] texts = new String[4];
-		texts[0] = name;
-		texts[1] = carbRatio;
-		texts[2] = proteinRatio;
-		texts[3] = fatRatio;
+		texts[0] = User.string2Tag(name);
+		texts[1] = User.string2Tag(carbRatio);
+		texts[2] = User.string2Tag(proteinRatio);
+		texts[3] = User.string2Tag(fatRatio);
 		return texts;
 	}
-	
-//	public String[] getUiTexts() {
-//	    String[] texts = new String[4];
-//	    texts[0] = "<html><span style='font-size:12px;'>" + name + "</span></html>";
-//	    texts[1] = "<html><span style='font-size:12px;'>" + carbRatio + "</span></html>";
-//	    texts[2] = "<html><span style='font-size:12px;'>" + proteinRatio + "</span></html>";
-//	    texts[3] = "<html><span style='font-size:12px;'>" + fatRatio + "</span></html>";
-//	    return texts;
-//	}
 
 	@Override
 	public void read(Scanner scan) {
