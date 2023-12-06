@@ -1,11 +1,18 @@
 package ui;
 
-import java.awt.event.*;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Properties;
 
-import javax.swing.*;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 import health.DailyInfo;
 import health.Date;
@@ -13,10 +20,10 @@ import health.Exercise;
 import health.ExerciseMgr;
 import health.User;
 import health.UserExercise;
-
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
+import net.sourceforge.jdatepicker.DateModel;
 
 public class AddUserExerciseDialog extends javax.swing.JDialog {
 	JDatePickerImpl datePicker;

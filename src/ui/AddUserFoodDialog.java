@@ -17,7 +17,6 @@ import health.Food;
 import health.FoodMgr;
 import health.User;
 import health.UserFood;
-import health.UserMgr;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;

@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -45,6 +46,7 @@ public class GUIMain {
 		jtab.add("음식", foodPane);
 		jtab.add("운동", exercisePane);
 
+		frame.setPreferredSize(new Dimension(900,800));
 		frame.getContentPane().add(jtab);
 		frame.pack();
 		frame.setLocationRelativeTo(jtab);
