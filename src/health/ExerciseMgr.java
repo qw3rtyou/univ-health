@@ -8,14 +8,15 @@ import java.util.Scanner;
 public class ExerciseMgr extends DataEngineImpl<Exercise> {
 	private static ExerciseMgr mgr = null;
 	private List<Exercise> exercises;
-	private String headers[] = { "타입", "운동", "강도", "부위" };
+	private String headers[] = { "타입", "운동", "강도", "부위", "사진" };
 
 	private ExerciseMgr() {
 
-		exercises = new ArrayList<>();  // 초기화
+		exercises = new ArrayList<>(); // 초기화
 		setLabels(headers);
 		readAll("data/exercise_data.txt");
 	}
+
 	public List<Exercise> getExercises() {
 		return exercises;
 	}
@@ -30,7 +31,9 @@ public class ExerciseMgr extends DataEngineImpl<Exercise> {
 			if (!type.equals("유산소")) {
 				parts = file.next();
 			}
-			exercises.add(new Exercise(type, name, mets, parts));
+
+			String photoDir = file.next();
+			exercises.add(new Exercise(type, name, mets, parts, photoDir));
 		}
 		file.close();
 	}

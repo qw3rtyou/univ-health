@@ -11,10 +11,6 @@ import javax.swing.JTextField;
 import health.Food;
 import health.FoodMgr;
 
-import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
-import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
-import net.sourceforge.jdatepicker.impl.UtilDateModel;
-
 public class AddFoodDialog extends javax.swing.JDialog {
 	private static final long serialVersionUID = 1L;
 	JTextField nameField;
