@@ -76,16 +76,19 @@ public class Exercise implements Manageable, UIData {
 		// TODO Auto-generated method stub
 		String[] texts = new String[5];
 		texts[0] = User.string2Tag(type);
-		texts[1] = User.string2Tag(name);
-		texts[2] = User.string2Tag("" + mets);
-		texts[3] = User.string2Tag(part);
-		//texts[4] = "사아아진<html><img src='" + photoDir + "'></html>";
-		texts[4] = "<html><img src='file:" + photoDir + "'></html>";
+		texts[1] = "<html><img src='file:" + photoDir + "'></html>";
+		texts[2] = User.string2Tag(name);
+		texts[3] = User.string2Tag("" + mets);
+		texts[4] = User.string2Tag(part);
 		return texts;
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public String getPhotoDir() {
+		return photoDir;
 	}
 
 	public String toStringforFile() {

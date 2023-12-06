@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class ExerciseMgr extends DataEngineImpl<Exercise> {
 	private static ExerciseMgr mgr = null;
 	private List<Exercise> exercises;
-	private String headers[] = { "타입", "운동", "강도", "부위", "사진" };
+	private String headers[] = { "타입", "사진", "운동", "강도", "부위" };
 
 	private ExerciseMgr() {
 
@@ -16,15 +16,11 @@ public class ExerciseMgr extends DataEngineImpl<Exercise> {
 		setLabels(headers);
 		readAll("data/exercise_data.txt");
 
-
 	}
 
 	public List<Exercise> getExercises() {
 		return exercises;
 	}
-
-
-
 
 	private void readAll(String filename) {
 		Scanner file = openFile(filename);

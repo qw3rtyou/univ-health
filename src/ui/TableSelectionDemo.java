@@ -55,7 +55,7 @@ public class TableSelectionDemo extends JPanel implements ListSelectionListener 
 		rowSM.addListSelectionListener(this);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 220));
 		
-		table.setRowHeight(30);	//셀 높이 설정
+		table.setRowHeight(70);	//셀 높이 설정
 //		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 //	    renderer.setFont(new Font("Serif", Font.BOLD, 30)); // 폰트와 글씨 크기 설정
 //	    TableColumnModel columnModel = table.getColumnModel();

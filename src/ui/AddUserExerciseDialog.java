@@ -1,15 +1,19 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Properties;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -41,7 +45,7 @@ public class AddUserExerciseDialog extends javax.swing.JDialog {
 	public void setup() {
 		UtilDateModel model = new UtilDateModel();
 		Properties p = new Properties();
-		p.put ("text.today", "Today");
+		p.put("text.today", "Today");
 		p.put("text.month", "Month");
 		p.put("text.year", "Year");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model);
@@ -71,6 +75,24 @@ public class AddUserExerciseDialog extends javax.swing.JDialog {
 			}
 		});
 
+//		nameBox.setRenderer(new DefaultListCellRenderer() {
+//			@Override
+//			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
+//					boolean cellHasFocus) {
+//				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+//
+//				// value는 Exercise 객체를 가정합니다. 그렇지 않으면 적절히 캐스팅하거나 변환하세요.
+//				Exercise exercise = (Exercise) value;
+//				setText(exercise.getName());
+//
+//				if (exercise.getPhotoDir() != null && !exercise.getPhotoDir().isEmpty()) {
+//					setIcon(new ImageIcon(exercise.getPhotoDir()));
+//				}
+//
+//				return this;
+//			}
+//		});
+
 		anaerobicButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				nameBox.removeAllItems();
@@ -98,7 +120,8 @@ public class AddUserExerciseDialog extends javax.swing.JDialog {
 		addFoodButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				java.util.Date selectedDate = (java.util.Date) datePicker.getModel().getValue();
-				Date date = new Date(selectedDate.getYear()+1900, selectedDate.getMonth()+1, selectedDate.getDate());
+				Date date = new Date(selectedDate.getYear() + 1900, selectedDate.getMonth() + 1,
+						selectedDate.getDate());
 				Exercise exercise = ExerciseMgr.getInstance().find((String) nameBox.getSelectedItem());
 				double size = Double.parseDouble(sizeField.getText());
 
