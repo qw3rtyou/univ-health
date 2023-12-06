@@ -49,7 +49,7 @@ public class GUIMain {
 		frame.setPreferredSize(new Dimension(900,800));
 		frame.getContentPane().add(jtab);
 		frame.pack();
-		frame.setLocationRelativeTo(jtab);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
 		frame.addWindowListener(new WindowAdapter() {	// 훅 메소드 받기 - 종료시 state 저장
@@ -122,7 +122,7 @@ public class GUIMain {
 
 		exerciseTable.tableTitle = "exercise";
 		exerciseTable.addComponentsToPane(ExerciseMgr.getInstance());
-		exerciseBottom.setupBottomPane(exerciseTable);
+		exerciseBottom.setupBottomPane(totalTable);
 		exercisePane.add(exerciseBottom, BorderLayout.NORTH);
 		exercisePane.add(exerciseTab, BorderLayout.CENTER);
 	}
