@@ -40,14 +40,21 @@ public class UserDetailDialog extends javax.swing.JDialog {
 		userDetails = texts;
 	}
 
+	public String stripHtmlTags(String input) {
+		return input.replaceAll("<[^>]*>", "");
+	}
+
 	void setup() {
-		User user = UserMgr.getInstance().find("");
+		User user = UserMgr.getInstance().find(stripHtmlTags(userDetails[0]));
+		System.out.println(userDetails[0]);
+		System.out.println(user);
 
 		JTabbedPane jtab = new JTabbedPane();
 		UserExerciseMgr tmpExerciseMgr = new UserExerciseMgr();
 		UserFoodMgr tmpUserFoodMgr = new UserFoodMgr();
 
 		for (DailyInfo dailyInfo : user.dailyInfos) {
+
 			for (UserExercise userExercise : dailyInfo.userExerciseMgr) {
 				tmpExerciseMgr.add(userExercise);
 			}
@@ -55,6 +62,7 @@ public class UserDetailDialog extends javax.swing.JDialog {
 				tmpUserFoodMgr.add(userfood);
 			}
 		}
+
 
 		userExercisePane = new JPanel(new BorderLayout());
 		userExerciseTable.tableTitle = "userexercise";
@@ -114,7 +122,7 @@ public class UserDetailDialog extends javax.swing.JDialog {
 		details[2] = new JLabel(userDetails[2]);
 		details[3] = new JLabel(userDetails[3]);
 		details[4] = new JLabel(userDetails[4]);
-		
+
 		JLabel nameLabel = new JLabel("이름: ");
 		nameLabel.setHorizontalAlignment(JLabel.CENTER);
 		JLabel heightLabel = new JLabel("키: ");
@@ -145,7 +153,7 @@ public class UserDetailDialog extends javax.swing.JDialog {
 		lpane.add(goalLabel);
 		details[4].setHorizontalAlignment(JLabel.CENTER);
 		lpane.add(details[4]);
-		
+
 
 		pane.add(BottomPane, BorderLayout.SOUTH);
 		pane.add(lpane, BorderLayout.CENTER);

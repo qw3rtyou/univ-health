@@ -45,9 +45,9 @@ public class AddExerciseDialog extends javax.swing.JDialog {
 				String name = nameField.getText();
 				String type = typeField.getText();
 				Double mets = Double.parseDouble(metsField.getText());
-				String part = partField.getText();
+				String part = partField.getText().trim();
 
-				Exercise exercise = new Exercise(name, type, mets, part, null);
+				Exercise exercise = new Exercise(type, name, mets, part, "data/photo/health.jpg");
 				ExerciseMgr.getInstance().addElement(exercise);
 				dispose();
 			}

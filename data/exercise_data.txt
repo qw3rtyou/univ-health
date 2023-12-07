@@ -43,3 +43,4 @@
 무산소 레그익스텐션 0.122 하체 data/photo/health.jpg
 무산소 스쿼트 0.12 하체 data/photo/health.jpg
 무산소 데드리프트 0.14 하체 data/photo/health.jpg
+무산소 테스트 1.0 등 data/photo/health.jpg
